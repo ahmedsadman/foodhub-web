@@ -1,0 +1,104 @@
+.body {
+    background-color: #c15511;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    font-family: 'lato';
+}
+
+.back {
+    display: inline-block;
+}
+
+.SignupQuery {
+    background-color: #e67e22;
+    position: absolute;
+    top: 30%;
+    left: 54%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 130px 70px;
+}
+
+.LoginQuery {
+    background-color: #e67e22;
+    position: absolute;
+    top: 30%;
+    left: 23%;
+    color: #fff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 130px 90px;
+}
+
+.form {
+    display: inline-block;
+}
+.login {
+    position: absolute;
+    top: 20%;
+    left: 25%;
+    background-color: #fff;
+    display: inline-grid;
+    margin: 4px;
+    border: 2px solid #fff;
+    padding: 185px 40px;
+    padding-top: 130px;
+    opacity: 0;
+}
+.signup {
+    position: absolute;
+    top: 20%;
+    left: 47%;
+    background-color: #fff;
+    display: inline-grid;
+    margin: 4px;
+    border: 2px solid #fff;
+    padding: 100px 40px;
+    text-decoration: none;
+    opacity: 1;
+}
+.btn {
+    background-color: #c15511;
+    position: relative;
+    width: 80px;
+    top: 40%;
+    left: 30%;
+
+    display: inline-block;
+    padding: 12px 20px;
+    padding-left: 40px;
+    font-size: 20px;
+    font-weight: 400;
+    text-decoration: none;
+    color: #fff;
+    border-radius: 200px;
+    transition: background-color 0.2s, border 0.2s, color 0.2s;
+}
+
+.btn:hover {
+	cursor: pointer;
+}
+
+.input {
+    display: inline-block;
+    width: 250px;
+    margin: 6px;
+    border: 2px solid #c15511;
+    border-radius: 7px;
+    padding: 8px 10px;
+}
+
+.login .input {
+    margin: 15px;
+}
+
+.login .btn {
+    top: 125%;
+}
+
+.back .btn {
+    top: 50%;
+    left: 20%;
+}
