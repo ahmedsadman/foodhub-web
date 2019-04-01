@@ -1,1 +1,264 @@
 /* Type your css for search result page here */
+
+.all{
+	margin: 0px;
+	padding: 0px;
+    box-sizing: border-box;
+    background-color:#F2F2F2;
+	color:#515151;
+	font-family: 'Bahnschrift SemiBold','Arial','sans-serif';
+	font-weight: 300;
+	font-size: 20px;
+	text-rendering: optimizeLegibility;
+}
+
+
+.row{	
+	background-color: #e67e22;
+	margin: 0 auto;
+
+}
+.nav{
+	background-color: #e67e22;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;	
+	padding: 10px 20px;
+	color: #E1DEDE;
+	font-size: 25px;
+}
+
+.btn{
+	padding: 8px 10px;
+	border: 2px solid #fff;
+	border-radius: 25px; 
+}
+ 
+.navlist{
+	margin-top: 0px;
+	margin-left: 40px;
+	margin-right: 20px; 
+	float: right;
+}
+
+.navlistlink:link,
+.navlistlink:visited{
+	padding: 8px 0;
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 70%;
+	border-bottom: 2px solid transperent;
+	transition: border 0.2s;
+}
+
+.navlistlink:hover,
+.navlistlink:active{
+
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 70%;
+	border-bottom: 2px solid #c15511;
+}
+
+
+.navlink{
+	float: right;
+	color: #fff;
+	font-size: 20px; 
+	border-bottom: 2px solid #fff; 
+		
+}
+
+.navInput{
+	color: #E1DEDE;
+	margin-left: -20px;
+}
+
+.bigSearch{
+	width: 300px;
+	margin: 1px 3px;
+	margin-right: -4	0px;
+	margin-left: 60px;
+	padding: 7px 12px;
+	border: 2px solid #e67e22;
+	border-radius: 35px;
+	border-top-right-radius: 0%;
+	border-bottom-right-radius: 0%;
+	font-size: 20px;
+}
+
+.smallSearch{
+	width: 200px;
+	margin: 1px 3px;
+	margin-left: -20px;
+	padding: 7px 10px;
+	border: 2px solid #e67e22;
+	border-radius: 35px;
+	border-top-left-radius: 0%;
+	border-bottom-left-radius: 0%;
+	font-size: 20px;
+}
+
+
+.p{
+	margin: 40px 40px;
+	font-size: 30px;
+}
+
+.filterBlock{
+	background-color: #fff;
+	border-radius: 5px;
+	display: inline-block;
+	margin: 0px 40px;
+	padding: 20px 40px;
+}	
+
+
+.orange{
+	color: #ED7D31;
+	margin-bottom: 10px;
+}
+
+.ash{
+
+	color: #515151;
+	text-decoration: none;
+
+}
+
+.Tags{
+	background-color: #D9D9D9;
+	display: inline-block;
+	padding: 5px 15px;
+
+}
+
+.Restaurants{
+	position: absolute;
+	top: 180px;
+	left: 320px;
+	box-sizing: inherit;
+	
+}
+
+.resBlock{
+	background-color: #fff;
+	border-radius: 5px;
+	display: inline-block;
+	width: 700px;
+	margin: 5px 40px;
+	padding: 10px 20px;
+	color: #515151;
+}
+
+.resImg {
+	height: 140px;
+	width: 140px;
+}
+
+
+
+.left{
+	width: 155px;
+	float: left;
+}
+
+.right{
+	float: left;
+	padding-left: 20px;
+	font-size: 15px;
+	
+	
+}
+
+.large{
+	font-size: 40px;
+}
+
+.small{
+	font-size: 12px;
+}
+
+.medium{
+	font-size: 16Spx;
+}
+
+.numbers{
+	float: right;
+	float: top; 
+}
+
+.rating{
+	float: right;
+	background-color: #ED7D31;
+	color: #fff;
+	padding: 10px 10px;
+	font-size: 25px;
+	
+}
+
+.reviewCheckins{
+	position: relative;
+	top:55px;
+	left: 50px;
+	float: right;
+	color: #515151;
+	font-size: 12px;
+	text-align: right;
+}
+
+.icons{
+	float: right;
+	position: relative;
+	top:115px;
+	left: 135px;
+	float: right;
+	color: orange;
+}
+
+.icon{
+	color: #ED7D31;
+	margin: 5px 5px;
+}
+
+
+.nearbyBlock{
+	background-color: #fff;
+	position: absolute;
+	top: 180px;
+	left: 1070px;
+	border-radius: 5px;
+	margin: 0px 40px;
+	padding: 20px 30px;
+}
+
+.featuredBlock{
+	background-color: #fff;		
+	position: absolute;
+	top: 650px;
+	left: 1070px;
+	border-radius: 5px;
+	margin: 0px 40px;
+	padding: 20px 40px;
+	
+
+}
+
+.divImg{
+	height: 120px;
+	width: 120px;
+}
+
+.nearby{
+	float: left;
+	padding: 10px 5px;
+}
+
+.featured{
+	float: left;
+	padding: 10px 5px;
+}
+
