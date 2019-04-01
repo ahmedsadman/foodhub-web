@@ -46,6 +46,7 @@
     padding: 185px 40px;
     padding-top: 130px;
     opacity: 0;
+    transition: opacity 0.3s;
 }
 .signup {
     position: absolute;
@@ -58,6 +59,7 @@
     padding: 100px 40px;
     text-decoration: none;
     opacity: 1;
+    transition: opacity 0.3s;
 }
 .btn {
     background-color: #c15511;
