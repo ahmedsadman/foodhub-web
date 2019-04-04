@@ -2,7 +2,7 @@ import React from 'react';
 
 export const Card = (props) => {
     return (
-        <div style={styles.container}>
+        <div style={{ ...styles.container, ...props.style }}>
             {props.children}
         </div>
     )
@@ -13,6 +13,7 @@ const styles = {
         height: 'auto',
         border: '1px solid rgb(209, 209, 209)',
         padding: '10px',
-        boxShadow: '1px 1px 1px #c9c9c9'
+        boxShadow: '1px 1px 1px #c9c9c9',
+        backgroundColor: '#fff'
     }
 }
