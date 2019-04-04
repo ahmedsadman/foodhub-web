@@ -7,6 +7,7 @@
 	font-weight: 300;
 	font-size: 18px;
 	text-rendering: optimizeLegibility;
+	min-height: 100%;
 }
 
 .all * {
@@ -112,8 +113,7 @@
 .filterBlock{
 	background-color: #fff;
 	border-radius: 5px;
-	display: inline-block;
-	margin: 0px 40px;
+	margin: 0px 20px;
 	padding: 20px 40px;
 	padding-right: 20px;
 }	
@@ -145,32 +145,30 @@
 }
 
 .Restaurants{
-	position: absolute;
-	top: 180px;
-	left: 250px;
+	float: left;
 	box-sizing: inherit;
-	
+	width: 600px;
 }
 
 .resBlock{
 	background-color: #fff;
 	border-radius: 5px;
 	display: inline-block;
-	width: 700px;
-	margin: 5px 40px;
+	width: inherit;
+	margin: 5px 20px;
 	padding: 10px 20px;
 	color: #515151;
 }
 
 .resImg {
-	height: 140px;
-	width: 140px;
+	height: 100px;
+	width: 100px;
 }
 
 
 
 .left{
-	width: 155px;
+	width: 100px;
 	float: left;
 }
 
@@ -178,8 +176,6 @@
 	float: left;
 	padding-left: 20px;
 	font-size: 15px;
-	
-	
 }
 
 .large{
@@ -191,12 +187,13 @@
 }
 
 .medium{
-	font-size: 16Spx;
+	font-size: 16px;
 }
 
 .numbers{
-	float: right;
-	float: top; 
+	float: left;
+	margin: 0;
+	padding: 0;
 }
 
 .rating{
@@ -235,24 +232,20 @@
 
 .nearbyBlock{
 	background-color: #fff;
-	position: absolute;
-	top: 180px;
-	left: 970px;
 	border-radius: 5px;
 	margin: 0px 40px;
-	padding: 20px 30px;
+	padding: 20px 5px;
+	display: inline-block;
+	width: 100%;
 }
 
 .featuredBlock{
-	background-color: #fff;		
-	position: absolute;
-	top: 560px;
-	left: 970px;
+	background-color: #fff;
 	border-radius: 5px;
 	margin: 0px 40px;
-	padding: 20px 30px;
-	
-
+	padding: 20px 5px;
+	display: inline-block;
+	width: 100%;
 }
 
 .divImg{
