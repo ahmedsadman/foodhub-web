@@ -9,7 +9,11 @@ class SearchResult extends Component {
                 <nav>
                     <div className={styles.row}>
                         <ul className={styles.nav}>
-                            <Link className={styles.btn} to='/'>
+                            
+                        <Link className={`${styles.btn} ${
+                            styles.navlist
+                            }`} 
+                            to='/'>
                                 {' '}
                                 <i className='fa fa-search' />{' '}
                             </Link>
@@ -58,7 +62,9 @@ class SearchResult extends Component {
                                 >
                                     Blog
                                 </Link>
+
                             </li>
+                            
                             <li className={styles.navlist}>
                                 {' '}
                                 <Link
@@ -81,6 +87,7 @@ class SearchResult extends Component {
                                     About us
                                 </Link>
                             </li>
+                            
                         </ul>
                     </div>
                 </nav>
@@ -95,8 +102,18 @@ class SearchResult extends Component {
                             Tags <br />
                             <br />
                         </span>
-                        <span classname={styles.Tags}>Burgers</span>
-                        <span classname={styles.Tags}>Uttara</span>
+                        <span className={styles.Tags}>
+                            Burgers
+                            <span> 
+                            <Link className={styles.cross} to='/'>  x</Link> 
+                            </span>
+                        </span>
+                        <span className={styles.Tags}>
+                            Uttara
+                            <span> 
+                            <Link className={styles.cross} to='/'>  x</Link> 
+                            </span>
+                        </span>
 
                         <br />
 
@@ -104,12 +121,12 @@ class SearchResult extends Component {
                             <br />
                             <br /> Sort by <br /> <br />
                         </span>
-                        <span className={styles.Ash}>
-                            <Link to='/'>Popularity</Link> <br />
-                            <Link to='/'>rating</Link> <br />
-                            <Link to='/'>Price</Link> <br />
-                            <Link to='/'>Distance</Link> <br />
-                            <Link to='/'>Recently Added</Link> <br />
+                        <span >
+                            <Link className={styles.Ash} to='/'>Popularity</Link> <br />
+                            <Link className={styles.Ash} to='/'>rating</Link> <br />
+                            <Link className={styles.Ash} to='/'>Price</Link> <br />
+                            <Link className={styles.Ash} to='/'>Distance</Link> <br />
+                            <Link className={styles.Ash} to='/'>Recently Added</Link> <br />
                         </span>
 
                         <span className={styles.orange}>
@@ -117,11 +134,11 @@ class SearchResult extends Component {
                             <br /> Restaurant Type <br /> <br />
                         </span>
                         <span className={styles.Ash}>
-                            <Link to='/'>Fine Dinning</Link> <br />
-                            <Link to='/'>Fast food</Link> <br />
-                            <Link to='/'>Food Cart</Link> <br />
-                            <Link to='/'>Rooptop</Link> <br />
-                            <Link to='/'>Poolside</Link> <br />
+                            <Link className={styles.Ash} to='/'>Fine Dinning</Link> <br />
+                            <Link className={styles.Ash} to='/'>Fast food</Link> <br />
+                            <Link className={styles.Ash} to='/'>Food Cart</Link> <br />
+                            <Link className={styles.Ash} to='/'>Rooptop</Link> <br />
+                            <Link className={styles.Ash} to='/'>Poolside</Link> <br />
                         </span>
 
                         <span className={styles.orange}>
@@ -129,21 +146,74 @@ class SearchResult extends Component {
                             <br /> Location <br /> <br />
                         </span>
                         <span className={styles.Ash}>
-                            <Link className={styles.fliterLink} to='/'>
-                                Uttara
-                            </Link>{' '}
-                            <br />
-                            <Link to='/'>Banani</Link> <br />
-                            <Link to='/'>Dhanmondi</Link> <br />
-                            <Link to='/'>Mohammadpur</Link> <br />
-                            <Link to='/'>Mirpur</Link> <br />
-                            <Link to='/'>Khilgaon</Link> <br />
+                            <Link className={styles.Ash} to='/'>Uttara</Link><br />
+                            <Link className={styles.Ash} to='/'>Banani</Link> <br />
+                            <Link className={styles.Ash} to='/'>Dhanmondi</Link> <br />
+                            <Link className={styles.Ash} to='/'>Mohammadpur</Link> <br />
+                            <Link className={styles.Ash} to='/'>Mirpur</Link> <br />
+                            <Link className={styles.Ash} to='/'>Khilgaon</Link> <br />
                         </span>
                     </div>
                 </section>
 
                 {/*Restaurant Block */}
                 <div className={styles.Restaurants}>
+                    <div className={styles.resBlock}>
+                        <div className={styles.left}>
+                            <img
+                                alt=''
+                                className={styles.resImg}
+                                src='/images/css/Takeout.jpg'
+                            />
+                        </div>
+                        <div className={styles.right}>
+                            <div className={styles.large}>Takeout</div>
+                            <div className={styles.small}>
+                                17, Level - 3, Sonargaon Janapath, Rd No 3<br />
+                                Uttara, Dhaka.
+                                <br />
+                                <br />
+                            </div>
+                            <div className={styles.medium}>
+                                {' '}
+                                Fast food
+                                <br />
+                                $$$
+                                <br />
+                            </div>
+                            <div className={styles.orange}>Open now</div>
+                        </div>
+                        <div className={styles.numbers}>
+                            <div className={styles.rating}>4.8</div>
+                            <div className={styles.reviewCheckins}>
+                                778 Reviews
+                                <br />
+                                2458 Check-ins
+                            </div>
+                            <div className={styles.icons}>
+                                <Link to='/'>
+                                    <i
+                                        className={`${styles.icon} fa fa-phone`}
+                                    />
+                                </Link>
+                                <Link to='/'>
+                                    <i
+                                        className={`${
+                                            styles.icon
+                                        } fa fa-envelope`}
+                                    />
+                                </Link>
+                                <Link to='/'>
+                                    <i
+                                        className={`${
+                                            styles.icon
+                                        } fa fa-search`}
+                                    />
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+
                     <div className={styles.resBlock}>
                         <div className={styles.left}>
                             <img
@@ -226,63 +296,7 @@ class SearchResult extends Component {
                             <div className={styles.orange}>Open now</div>
                         </div>
                         <span className={styles.numbers}>
-                            <div className={styles.ratings}>4.8</div>
-                            <div className={styles.reviewCheckins}>
-                                778 Reviews
-                                <br />
-                                2458 Check-ins
-                            </div>
-                            <div className={styles.icons}>
-                                <Link to='/'>
-                                    <i
-                                        className={`${styles.icon} fa fa-phone`}
-                                    />
-                                </Link>
-                                <Link to='/'>
-                                    <i
-                                        className={`${
-                                            styles.icon
-                                        } fa fa-envelope`}
-                                    />
-                                </Link>
-                                <Link to='/'>
-                                    <i
-                                        className={`${
-                                            styles.icon
-                                        } fa fa-search`}
-                                    />
-                                </Link>
-                            </div>
-                        </span>
-                    </div>
-
-                    <div className={styles.resBlock}>
-                        <div className={styles.left}>
-                            <img
-                                alt=''
-                                className={styles.resImg}
-                                src='/images/css/Takeout.jpg'
-                            />
-                        </div>
-                        <div className={styles.right}>
-                            <div className={styles.large}>Takeout</div>
-                            <div className={styles.small}>
-                                17, Level - 3, Sonargaon Janapath, Rd No 3<br />
-                                Uttara, Dhaka.
-                                <br />
-                                <br />
-                            </div>
-                            <div className={styles.medium}>
-                                {' '}
-                                Fast food
-                                <br />
-                                $$$
-                                <br />
-                            </div>
-                            <div className={styles.orange}>Open now</div>
-                        </div>
-                        <span className={styles.numbers}>
-                            <div className={styles.ratings}>4.8</div>
+                            <div className={styles.rating}>4.8</div>
                             <div className={styles.reviewCheckins}>
                                 778 Reviews
                                 <br />
@@ -312,6 +326,7 @@ class SearchResult extends Component {
                         </span>
                     </div>
                 </div>
+                <div style={{ clear: 'both' }}></div>
 
                 {/*Sidebar */}
                 <div className={styles.nearbyBlock}>
@@ -319,7 +334,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Madchef</h5>
@@ -328,7 +343,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Khana's</h5>
@@ -337,7 +352,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Mr.Manik</h5>
@@ -346,7 +361,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Mumins Foods</h5>
@@ -359,7 +374,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Madchef</h5>
@@ -368,7 +383,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Khana's</h5>
@@ -377,7 +392,7 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Mr.Manik</h5>
@@ -386,13 +401,16 @@ class SearchResult extends Component {
                     <div className={styles.nearby}>
                         <img
                             alt=''
-                            classname={styles.divImg}
+                            className={styles.divImg}
                             src='/images/css/Madchef.jpg'
                         />
                         <h5>Mumins Foods</h5>
                         <h6>Mirpur</h6>
+
                     </div>
+                    <div style={{ clear: 'both' }}></div>
                 </div>
+                <div style={{ clear: 'both' }}></div>
             </div>
         );
     }

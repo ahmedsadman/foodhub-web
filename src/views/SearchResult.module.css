@@ -1,17 +1,19 @@
 /* Type your css for search result page here */
 
 .all{
-	margin: 0px;
-	padding: 0px;
-    box-sizing: border-box;
     background-color:#F2F2F2;
 	color:#515151;
 	font-family: 'Bahnschrift SemiBold','Arial','sans-serif';
 	font-weight: 300;
-	font-size: 20px;
+	font-size: 18px;
 	text-rendering: optimizeLegibility;
 }
 
+.all * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
 
 .row{	
 	background-color: #e67e22;
@@ -30,7 +32,7 @@
 }
 
 .btn{
-	padding: 8px 10px;
+	padding: 7px 9px;
 	border: 2px solid #fff;
 	border-radius: 25px; 
 }
@@ -38,7 +40,6 @@
 .navlist{
 	margin-top: 0px;
 	margin-left: 40px;
-	margin-right: 20px; 
 	float: right;
 }
 
@@ -48,7 +49,7 @@
 	color: #fff;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-size: 70%;
+	font-size: 60%;
 	border-bottom: 2px solid transperent;
 	transition: border 0.2s;
 }
@@ -59,7 +60,7 @@
 	color: #fff;
 	text-decoration: none;
 	text-transform: uppercase;
-	font-size: 70%;
+	font-size: 60%;
 	border-bottom: 2px solid #c15511;
 }
 
@@ -80,7 +81,7 @@
 .bigSearch{
 	width: 300px;
 	margin: 1px 3px;
-	margin-right: -4	0px;
+	margin-right: 10px;
 	margin-left: 60px;
 	padding: 7px 12px;
 	border: 2px solid #e67e22;
@@ -93,7 +94,7 @@
 .smallSearch{
 	width: 200px;
 	margin: 1px 3px;
-	margin-left: -20px;
+	margin-left: 10px;
 	padding: 7px 10px;
 	border: 2px solid #e67e22;
 	border-radius: 35px;
@@ -114,6 +115,7 @@
 	display: inline-block;
 	margin: 0px 40px;
 	padding: 20px 40px;
+	padding-right: 20px;
 }	
 
 
@@ -122,7 +124,7 @@
 	margin-bottom: 10px;
 }
 
-.ash{
+.Ash{
 
 	color: #515151;
 	text-decoration: none;
@@ -130,16 +132,22 @@
 }
 
 .Tags{
-	background-color: #D9D9D9;
+	background-color: rgb(217, 217, 217);
 	display: inline-block;
-	padding: 5px 15px;
+	padding: 5px 5px;
+	margin: 2px 2px;
 
+}
+
+.cross{
+	text-decoration: none;
+	color: #515151;
 }
 
 .Restaurants{
 	position: absolute;
 	top: 180px;
-	left: 320px;
+	left: 250px;
 	box-sizing: inherit;
 	
 }
@@ -229,7 +237,7 @@
 	background-color: #fff;
 	position: absolute;
 	top: 180px;
-	left: 1070px;
+	left: 970px;
 	border-radius: 5px;
 	margin: 0px 40px;
 	padding: 20px 30px;
@@ -238,27 +246,27 @@
 .featuredBlock{
 	background-color: #fff;		
 	position: absolute;
-	top: 650px;
-	left: 1070px;
+	top: 560px;
+	left: 970px;
 	border-radius: 5px;
 	margin: 0px 40px;
-	padding: 20px 40px;
+	padding: 20px 30px;
 	
 
 }
 
 .divImg{
-	height: 120px;
-	width: 120px;
+	height: 100px;
+	width: 100px;
 }
 
 .nearby{
 	float: left;
-	padding: 10px 5px;
+	padding: 5px 5px;
 }
 
 .featured{
 	float: left;
-	padding: 10px 5px;
+	padding: 5px 5px;
 }
 
