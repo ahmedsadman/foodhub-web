@@ -8,7 +8,7 @@ export const RestaurantCard = props => {
                 <img
                     src='/images/css/Takeout.jpg'
                     alt=''
-                    style={{ width: 100, height: 100, flexGrow: 1 }}
+                    style={{ width: 80, height: 100, flexGrow: 1 }}
                 />
                 <div style={styles.basicInfo}>
                     <span style={{ fontSize: '140%' }}>{props.name}</span>
@@ -29,7 +29,7 @@ export const RestaurantCard = props => {
                             fontSize: '70%',
                             display: 'block',
                             marginTop: 5,
-                            textAlign: 'center'
+                            textAlign: 'right'
                         }}
                     >
                         778 Reviews
@@ -67,7 +67,7 @@ const styles = {
         display: 'block',
         backgroundColor: '#ED7D31',
         padding: '6px 8px',
-        alignSelf: 'center',
+        alignSelf: 'flex-end',
         color: '#fff',
         fontSize: '120%',
         textAlign: 'center'

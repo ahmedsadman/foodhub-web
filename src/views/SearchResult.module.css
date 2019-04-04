@@ -147,7 +147,7 @@
 .Restaurants{
 	float: left;
 	box-sizing: inherit;
-	width: 500px;
+	width: 50%;
 }
 
 .resBlock{
@@ -229,33 +229,26 @@
 	margin: 5px 5px;
 }
 
-
-.nearbyBlock{
+.sideBlock{
 	background-color: #fff;
 	border-radius: 5px;
-	margin: 0px 40px;
+	margin: 0px 20px;
 	padding: 20px 15px;
-	display: inline-block;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
 	width: 100%;
+	margin-bottom: 20px;
 }
 
-.featuredBlock{
-	background-color: #fff;
-	border-radius: 5px;
-	margin: 0px 40px;
-	padding: 20px 15px;
-	display: inline-block;
-	width: 100%;
+.nearby {
+	margin-bottom: 20px;
 }
 
 .divImg{
 	height: 100px;
 	width: 100px;
-}
-
-.nearby{
-	float: left;
-	padding: 5px 5px;
 }
 
 .featured{

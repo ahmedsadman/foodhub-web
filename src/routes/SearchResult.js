@@ -99,7 +99,7 @@ class SearchResult extends Component {
                         paddingBottom: 30
                     }}
                 >
-                    <section style={{ float: 'left' }}>
+                    <section style={{ float: 'left', width: '25%' }}>
                         <div className={styles.filterBlock}>
                             <span className={styles.orange}>
                                 Tags <br />
@@ -219,9 +219,9 @@ class SearchResult extends Component {
                         <RestaurantCard name='Mr. Manik' />
                     </div> {/* res block end */}
                     {/*Sidebar */}
-                    <div style={{ float: 'left', width: 260 }}>
-                        <div className={styles.nearbyBlock}>
-                            <p>Nearby Restaurants</p>
+                    <div style={{ float: 'left', width: '25%' }}>
+                        <div className={styles.sideBlock}>
+                            <p style={{ marginBottom: 10 }}>Nearby Restaurants</p>
                             <div className={styles.nearby}>
                                 <img
                                     alt=''
@@ -259,8 +259,8 @@ class SearchResult extends Component {
                                 <h6>Sector 13</h6>
                             </div>
                         </div>
-                        <div className={styles.featuredBlock}>
-                            <p>Featured Restaurants</p>
+                        <div className={styles.sideBlock}>
+                            <p style={{ marginBottom: 10 }}>Featured Restaurants</p>
                             <div className={styles.nearby}>
                                 <img
                                     alt=''
@@ -297,14 +297,14 @@ class SearchResult extends Component {
                                 <h5>Mumins Foods</h5>
                                 <h6>Mirpur</h6>
                             </div>
-                            <div style={{ clear: 'both' }} />
+                            
                         </div>
                     </div>{' '}
                     {/* end of sidebar container */}
-                    <div style={{ clear: 'both' }} />
+                    
                 </div>{' '}
                 {/* end of main content block */}
-                <div style={{ clear: 'both' }} />
+                <div style={{ clear: 'both' }} /> {/* IMPORTANT: DO NOT TAMPER */}
             </div> /* End of container div */
         );
     }
