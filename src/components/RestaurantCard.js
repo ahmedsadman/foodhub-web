@@ -6,14 +6,14 @@ export const RestaurantCard = props => {
         <Card style={{ marginBottom: 15 }}>
             <div style={styles.mainContainer}>
                 <img
-                    src='/images/css/Takeout.jpg'
+                    src={props.banner_image}
                     alt=''
-                    style={{ width: 80, height: 100, flexGrow: 1 }}
+                    style={{ width: 110, height: 100 }}
                 />
-                <div style={styles.basicInfo}>
+                <div style={{...styles.basicInfo, textTransform: 'capitalize'}}>
                     <span style={{ fontSize: '140%' }}>{props.name}</span>
                     <span style={{ fontSize: '80%' }}>
-                        17, Level-3, Sonargaon Janapth, Dhaka
+                        {props.address}
                     </span>
                     <div style={styles.meta}>
                         <span style={{ fontSize: '90%' }}>Fast Food</span>
@@ -23,7 +23,7 @@ export const RestaurantCard = props => {
                     </div>
                 </div>
                 <div style={styles.ratingSection}>
-                    <span style={styles.rating}>4.8</span>
+                    <span style={styles.rating}>{props.rating.toFixed(1)}</span>
                     <span
                         style={{
                             fontSize: '70%',

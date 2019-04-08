@@ -1,24 +1,42 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import styles from '../views/Home.module.css';
 
 class Home extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			food: '',
-			location: ''
-		};
-	}
+    constructor(props) {
+        super(props);
+        this.state = {
+            food: '',
+            area: '',
+            redirect: false
+        };
+    }
 
-	onSearch() {
-		console.log('Search event');
-		console.log(this.state.food, this.state.location);
-	}
+    onSearch() {
+        if (this.state.food || this.state.area) {
+            this.setState({ redirect: true });
+        }
+    }
 
-	onChangeInput(type, event) {
-		this.setState({ [type]: event.target.value });
-	}
+    redirectSearch() {
+        if (this.state.redirect) {
+            return (
+                <Redirect
+                    to={{
+                        pathname: '/restaurants/search',
+                        state: {
+                            area: this.state.area.toLowerCase(),
+                            food: this.state.food.toLowerCase()
+                        }
+                    }}
+                />
+            );
+        }
+    }
+
+    onChangeInput(type, event) {
+        this.setState({ [type]: event.target.value });
+    }
 
     render() {
         return (
@@ -42,7 +60,11 @@ class Home extends React.Component {
                     </div>
                 </nav>
                 <div className={styles.frontText}>
-                    <Link className={`${styles.btn} ${styles.btnDark}`} to='/' onClick={this.onSearch.bind(this)}>
+                    <Link
+                        className={`${styles.btn} ${styles.btnDark}`}
+                        to='/'
+                        onClick={this.onSearch.bind(this)}
+                    >
                         <i className='fa fa-search' />
                     </Link>
                 </div>
@@ -53,20 +75,21 @@ class Home extends React.Component {
                             type='text'
                             className={styles.bigSearch}
                             name='search by food'
-							placeholder='Search by Food'
-							value={this.state.food}
-							onChange={(e) => this.onChangeInput('food', e)}
+                            placeholder='Search by Food'
+                            value={this.state.food}
+                            onChange={e => this.onChangeInput('food', e)}
                         />
                         <input
                             type='text'
                             className={styles.smallSearch}
                             name='Location'
-							placeholder='Location'
-							value={this.state.location}
-							onChange={(e) => this.onChangeInput('location', e)}
+                            placeholder='Location'
+                            value={this.state.area}
+                            onChange={e => this.onChangeInput('area', e)}
                         />
                     </form>
                 </div>
+                {this.redirectSearch()}
             </header>
         );
     }

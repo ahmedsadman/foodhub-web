@@ -1,11 +1,58 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 import { RestaurantCard } from '../components/RestaurantCard';
 import { Navbar } from '../components/Navbar';
 import { ResBox } from '../components/ResBox';
+import { api } from '../utils/api';
 import styles from '../views/SearchResult.module.css';
 
 class SearchResult extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            list: [],
+            listLoading: false
+        };
+    }
+
+    componentDidMount() {
+        this.fetchRestaurants();
+    }
+
+    async fetchRestaurants() {
+        this.setState({ listLoading: true });
+        const { area, food } = this.props.location.state;
+        console.log(area, food);
+        const params = {
+            food,
+            area
+        };
+
+        try {
+            const response = await axios.get(api.searchRestaurant, { params });
+            console.log(response.data);
+            this.setState({ list: response.data.data, listLoading: false });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    renderRestaurantsList() {
+        if (this.state.listLoading) {
+            return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
+        }
+        return this.state.list.map(item => (
+            <RestaurantCard
+                key={item._id}
+                name={item.name}
+                address={`${item.address.area}, ${item.address.district}`}
+                rating={item.review.average}
+                banner_image={item.banner_image}
+            />
+        ));
+    }
+
     render() {
         return (
             <div className={styles.all}>
@@ -128,9 +175,7 @@ class SearchResult extends Component {
                     </section>
                     {/*Restaurant Block */}
                     <div className={styles.Restaurants}>
-                        <RestaurantCard name='Takeout' />
-                        <RestaurantCard name='Chillox' />
-                        <RestaurantCard name='Mr. Manik' />
+                        {this.renderRestaurantsList()}
                     </div>{' '}
                     {/* res block end */}
                     {/*Sidebar */}
