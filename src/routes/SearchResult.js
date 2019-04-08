@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { RestaurantCard } from '../components/RestaurantCard';
 import { Navbar } from '../components/Navbar';
+import { ResBox } from '../components/ResBox';
 import styles from '../views/SearchResult.module.css';
 
 class SearchResult extends Component {
@@ -11,17 +12,7 @@ class SearchResult extends Component {
                 <nav>
                     <Navbar />
                 </nav>
-                
-                <div
-                    id='main'
-                    style={{
-                        marginLeft: 'auto',
-                        marginRight: 'auto',
-                        width: 1140,
-                        paddingTop: 30,
-                        paddingBottom: 30
-                    }}
-                >
+                <div id='main' style={inStyle.container}>
                     <section style={{ float: 'left', width: '25%' }}>
                         <div className={styles.filterBlock}>
                             <span className={styles.orange}>
@@ -140,97 +131,79 @@ class SearchResult extends Component {
                         <RestaurantCard name='Takeout' />
                         <RestaurantCard name='Chillox' />
                         <RestaurantCard name='Mr. Manik' />
-                    </div> {/* res block end */}
+                    </div>{' '}
+                    {/* res block end */}
                     {/*Sidebar */}
                     <div style={{ float: 'left', width: '25%' }}>
                         <div className={styles.sideBlock}>
-                            <p style={{ marginBottom: 10 }}>Nearby Restaurants</p>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Madchef</h5>
-                                <h6>Sector 13</h6>
-                            </div>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Khana's</h5>
-                                <h6>Sector 13</h6>
-                            </div>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Mr.Manik</h5>
-                                <h6>Sector 13</h6>
-                            </div>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Mumins Foods</h5>
-                                <h6>Sector 13</h6>
-                            </div>
+                            <p style={{ marginBottom: 10 }}>
+                                Nearby Restaurants
+                            </p>
+                            <ResBox
+                                styles={styles}
+                                name='Mr. Manik'
+                                address='Uttara, Dhaka'
+                            />
+                            <ResBox
+                                styles={styles}
+                                name='Takeout'
+                                address='Dhanmondi, Dhaka'
+                            />
+                            <ResBox
+                                styles={styles}
+                                name='Chillox'
+                                address='Badda, Dhaka'
+                            />
+                            <ResBox
+                                styles={styles}
+                                name='Khanas'
+                                address='Uttara, Dhaka'
+                            />
                         </div>
                         <div className={styles.sideBlock}>
-                            <p style={{ marginBottom: 10 }}>Featured Restaurants</p>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Madchef</h5>
-                                <h6>Uttara</h6>
-                            </div>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Khana's</h5>
-                                <h6>Banani</h6>
-                            </div>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Mr.Manik</h5>
-                                <h6>Dhanmondi</h6>
-                            </div>
-                            <div className={styles.nearby}>
-                                <img
-                                    alt=''
-                                    className={styles.divImg}
-                                    src='/images/css/Madchef.jpg'
-                                />
-                                <h5>Mumins Foods</h5>
-                                <h6>Mirpur</h6>
-                            </div>
-                            
+                            <p style={{ marginBottom: 10 }}>
+                                Featured Restaurants
+                            </p>
+                            <ResBox
+                                styles={styles}
+                                name='Mr. Manik'
+                                address='Uttara, Dhaka'
+                            />
+                            <ResBox
+                                styles={styles}
+                                name='Takeout'
+                                address='Dhanmondi, Dhaka'
+                            />
+                            <ResBox
+                                styles={styles}
+                                name='Chillox'
+                                address='Badda, Dhaka'
+                            />
+                            <ResBox
+                                styles={styles}
+                                name='Khanas'
+                                address='Uttara, Dhaka'
+                            />
                         </div>
                     </div>{' '}
                     {/* end of sidebar container */}
-                    
                 </div>{' '}
                 {/* end of main content block */}
-                <div style={{ clear: 'both' }} /> {/* IMPORTANT: DO NOT TAMPER */}
+                <div style={{ clear: 'both' }} />{' '}
+                {/* IMPORTANT: DO NOT TAMPER */}
             </div> /* End of container div */
         );
     }
 }
+
+const inStyle = {
+    container: {
+        marginLeft: 'auto',
+        marginRight: 'auto',
+        width: 1140,
+        paddingTop: 30,
+        paddingBottom: 30
+    }
+};
 
 export default SearchResult;
