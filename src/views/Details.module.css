@@ -1,0 +1,15 @@
+.all{
+    background-color:#F2F2F2;
+	color:#515151;
+	font-family: 'Bahnschrift SemiBold','Arial','sans-serif';
+	font-weight: 300;
+	font-size: 18px;
+	text-rendering: optimizeLegibility;
+	min-height: 100%;
+}
+
+.all * {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
