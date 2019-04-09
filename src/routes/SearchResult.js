@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { RestaurantCard } from '../components/RestaurantCard';
-import { Navbar } from '../components/Navbar';
 import { ResBox } from '../components/ResBox';
 import { api } from '../utils/api';
 import styles from '../views/SearchResult.module.css';
@@ -56,9 +55,6 @@ class SearchResult extends Component {
     render() {
         return (
             <div className={styles.all}>
-                <nav>
-                    <Navbar />
-                </nav>
                 <div id='main' style={inStyle.container}>
                     <section style={{ float: 'left', width: '25%' }}>
                         <div className={styles.filterBlock}>
@@ -236,7 +232,7 @@ class SearchResult extends Component {
                 {/* end of main content block */}
                 <div style={{ clear: 'both' }} />{' '}
                 {/* IMPORTANT: DO NOT TAMPER */}
-            </div> /* End of container div */
+            </div>
         );
     }
 }

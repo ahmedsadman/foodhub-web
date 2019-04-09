@@ -23,7 +23,7 @@ class Home extends React.Component {
             return (
                 <Redirect
                     to={{
-                        pathname: '/restaurants/search',
+                        pathname: '/main/restaurants/search',
                         state: {
                             area: this.state.area.toLowerCase(),
                             food: this.state.food.toLowerCase()
