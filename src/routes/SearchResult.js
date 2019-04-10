@@ -41,6 +41,10 @@ class SearchResult extends Component {
         if (this.state.listLoading) {
             return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
         }
+
+        if (!this.state.listLoading && this.state.list.length === 0) {
+            return <h1 style={{ textAlign: 'center' }}>No Restaurants Found</h1>;
+        }
         return this.state.list.map(item => (
             <RestaurantCard
                 key={item._id}

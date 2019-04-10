@@ -15,7 +15,7 @@
 .frontText {
     position: absolute;
     width: 100px;
-    top: 65%;
+    top: 55%;
     left: 80%;
     transform: translate(-15%, -55%);
 }
@@ -94,11 +94,14 @@
     border-bottom: 2px solid #c15511;
 }
 
-.bigSearch {
+.bigSearchContainer {
     position: absolute;
-    top: 65%;
+    top: 55%;
     left: 30%;
     transform: translate(-20%, -50%);
+}
+
+.bigSearch {
     width: 500px;
     box-sizing: border-box;
     border: 2px solid #c15511;
@@ -108,17 +111,19 @@
     border-bottom-right-radius: 0%;
     font-size: 16px;
     background-color: #ccc;
-
     padding: 12px 20px 12px 40px;
-    -webkit-transition: width 0.4s ease-in-out;
-    transition: width 0.4s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;
+}
+
+.smallSearchContainer {
+    position: absolute;
+    top: 55%;
+    left: 60%;
+    transform: translate(-5%, -50%);
 }
 
 .smallSearch {
-    position: absolute;
-    top: 65%;
-    left: 60%;
-    transform: translate(-5%, -50%);
     width: 250px;
     box-sizing: border-box;
     border: 2px solid #c15511;
@@ -132,4 +137,26 @@
     padding: 12px 20px 12px 40px;
     -webkit-transition: width 0.4s ease-in-out;
     transition: width 0.4s ease-in-out;
+}
+
+.foodSuggestion {
+    position: absolute;
+    /* top: 68.2%;
+    left: 24%; */
+    top: 47px;
+    left: 0;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 500px;
+    list-style-type: none;
+    background-color: #ddd;
+    font-size: 80%;
+    opacity: 0;
+    transition: all 0.2s ease-in-out;
+}
+
+.foodSuggestion li {
+    padding: 10px 5px;
+    border-bottom: 1px solid rgb(172, 172, 172);  
+    cursor: pointer; 
 }

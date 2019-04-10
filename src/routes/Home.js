@@ -8,7 +8,8 @@ class Home extends React.Component {
         this.state = {
             food: '',
             area: '',
-            redirect: false
+            redirect: false,
+            showFoodSuggestion: false
         };
     }
 
@@ -38,9 +39,26 @@ class Home extends React.Component {
         this.setState({ [type]: event.target.value });
     }
 
+    onSuggestionClick = e => {
+        console.log(e.target.innerText);
+        this.setState({ food: e.target.innerText, showFoodSuggestion: false });
+        this.foodSuggestion.style.opacity = 0;
+        this.foodSuggestion.style.pointerEvents = 'none';
+        this.foodSearch.style.borderRadius = '35px';
+        this.foodSearch.style.borderTopRightRadius = 0;
+        this.foodSearch.style.borderBottomRightRadius = 0;
+    };
+
+    onSearchFocus() {
+        this.foodSearch.style.borderRadius = 0;
+        this.setState({ showFoodSuggestion: true });
+        this.foodSuggestion.style.opacity = 1;
+        this.foodSuggestion.style.pointerEvents = 'all';
+    }
+
     render() {
         return (
-            <header className={styles.header}>
+            <header className={styles.header} style={{ position: 'relative' }}>
                 <nav>
                     <div className={styles.row}>
                         <ul className={styles.mainNav}>
@@ -71,22 +89,40 @@ class Home extends React.Component {
 
                 <div>
                     <form>
-                        <input
-                            type='text'
-                            className={styles.bigSearch}
-                            name='search by food'
-                            placeholder='Search by Food'
-                            value={this.state.food}
-                            onChange={e => this.onChangeInput('food', e)}
-                        />
-                        <input
-                            type='text'
-                            className={styles.smallSearch}
-                            name='Location'
-                            placeholder='Location'
-                            value={this.state.area}
-                            onChange={e => this.onChangeInput('area', e)}
-                        />
+                        <div className={styles.bigSearchContainer}>
+                            <input
+                                type='text'
+                                name='search by food'
+                                placeholder='Search by Food'
+                                className={styles.bigSearch}
+                                value={this.state.food}
+                                onChange={e => this.onChangeInput('food', e)}
+                                spellCheck={false}
+                                onFocus={this.onSearchFocus.bind(this)}
+                                ref={comp => (this.foodSearch = comp)}
+                            />
+                            <ul
+                                className={styles.foodSuggestion}
+                                ref={comp => (this.foodSuggestion = comp)}
+                            >
+                                <li onClick={this.onSuggestionClick}>Burger</li>
+                                <li onClick={this.onSuggestionClick}>Pizza</li>
+                                <li onClick={this.onSuggestionClick}>
+                                    Biriyani
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div className={styles.smallSearchContainer}>
+                            <input
+                                type='text'
+                                className={styles.smallSearch}
+                                name='Location'
+                                placeholder='Location'
+                                value={this.state.area}
+                                onChange={e => this.onChangeInput('area', e)}
+                            />
+                        </div>
                     </form>
                 </div>
                 {this.redirectSearch()}
