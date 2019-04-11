@@ -2,10 +2,87 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 
 class CreateRestaurant extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            menuList: [],
+            foodType: '',
+            foodName: '',
+            foodPrice: ''
+        };
+    }
+
+    addFoodItem() {
+        const index = this.state.menuList.findIndex(
+            item =>
+                item.type === this.state.foodType &&
+                item.name === this.state.foodName
+        );
+
+        // item already exists, so edit it
+        if (index > -1) {
+            const newList = this.state.menuList.map((item, currIndex) => {
+                if (currIndex === index) {
+                    return {
+                        name: this.state.foodName,
+                        type: this.state.foodType,
+                        price: this.state.foodPrice
+                    };
+                }
+                return item;
+            });
+            this.setState({
+                menuList: newList,
+                foodName: '',
+                foodPrice: '',
+                foodType: ''
+            });
+        } else {
+            const newItem = {
+                type: this.state.foodType,
+                name: this.state.foodName,
+                price: this.state.foodPrice
+            };
+
+            this.setState({
+                menuList: [...this.state.menuList, newItem],
+                foodName: '',
+                foodPrice: '',
+                foodType: ''
+            });
+        }
+    }
+
+    onInputChange(type, e) {
+        this.setState({ [type]: e.target.value });
+    }
+
+    renderFoodMenuItems() {
+        return this.state.menuList.map(item => {
+            return (
+                <div style={styles.foodItem} key={`${item.name}-${item.type}`}>
+                    <div style={{ width: '25%' }}>
+                        {item.type}
+                    </div>
+                    <div style={{ width: '25%' }}>
+                        {item.name}
+                    </div>
+                    <div style={{ width: '25%' }}>
+                        {item.price}
+                    </div>
+                    <div style={{ display: 'flex', width: 'auto' }}>
+                        <i className='fa fa-edit' />
+                        <i className='fa fa-trash' style={{ marginLeft: 5 }} />
+                    </div>
+                </div>
+            );
+        });
+    }
+
     render() {
         return (
             <div style={styles.container}>
-                <h1>Create a new Restaurant</h1>
+                <h1>Create a new restaurant</h1>
                 <div style={styles.formContainer}>
                     <form>
                         <div style={styles.fieldSet}>
@@ -85,9 +162,7 @@ class CreateRestaurant extends Component {
                                 alignItems: 'flex-start'
                             }}
                         >
-                            <div>
-                                <p>Features</p>
-                            </div>
+                            <p>Features</p>
 
                             <div
                                 style={{
@@ -121,17 +196,95 @@ class CreateRestaurant extends Component {
                                     <label htmlFor='wifi'>AC</label>
                                 </div>
                                 <div style={{ width: 400 }}>
-                                    <input type='checkbox' name='name' style={{ marginRight: 10 }} />
+                                    <input
+                                        type='checkbox'
+                                        name='name'
+                                        style={{ marginRight: 10 }}
+                                    />
                                     <label htmlFor='wifi'>Smoking Zone</label>
                                 </div>
                                 <div style={{ width: 400 }}>
-                                    <input type='checkbox' name='name' style={{ marginRight: 10 }} />
+                                    <input
+                                        type='checkbox'
+                                        name='name'
+                                        style={{ marginRight: 10 }}
+                                    />
                                     <label htmlFor='wifi'>Reservation</label>
                                 </div>
                                 <div style={{ width: 400 }}>
-                                    <input type='checkbox' name='name' style={{ marginRight: 10 }} />
+                                    <input
+                                        type='checkbox'
+                                        name='name'
+                                        style={{ marginRight: 10 }}
+                                    />
                                     <label htmlFor='wifi'>Parking</label>
                                 </div>
+                            </div>
+                        </div>
+                        <div
+                            style={{
+                                ...styles.fieldSet,
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                flexGrow: 1
+                            }}
+                        >
+                            <p style={{ marginBottom: 10 }}>Food Menu</p>
+
+                            {/* --------- Show added food items here ------------- */}
+                            <div
+                                style={{
+                                    flexDirection: 'column',
+                                    display: 'flex',
+                                    width: '100%'
+                                }}
+                            >
+                                {this.renderFoodMenuItems()}
+                            </div>
+                            {/* -------------------------------------------------- */}
+                            <div style={styles.foodMenuContainer}>
+                                <div>
+                                    <label htmlFor='name'>Type</label>
+                                    <input
+                                        style={{ ...styles.input, width: 100 }}
+                                        type='text'
+                                        name='name'
+                                        value={this.state.foodType}
+                                        onChange={e =>
+                                            this.onInputChange('foodType', e)
+                                        }
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor='name'>Name</label>
+                                    <input
+                                        style={{ ...styles.input, width: 230 }}
+                                        type='text'
+                                        name='name'
+                                        value={this.state.foodName}
+                                        onChange={e =>
+                                            this.onInputChange('foodName', e)
+                                        }
+                                    />
+                                </div>
+                                <div>
+                                    <label htmlFor='name'>Price</label>
+                                    <input
+                                        style={{ ...styles.input, width: 100 }}
+                                        type='text'
+                                        name='name'
+                                        value={this.state.foodPrice}
+                                        onChange={e =>
+                                            this.onInputChange('foodPrice', e)
+                                        }
+                                    />
+                                </div>
+                                <i
+                                    className='fa fa-check'
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={this.addFoodItem.bind(this)}
+                                />
                             </div>
                         </div>
                     </form>
@@ -168,11 +321,29 @@ const styles = {
     input: {
         width: 400,
         marginLeft: 10,
-        padding: 10,
+        padding: 6,
         borderRadius: 5,
         boxSizing: 'border-box',
         outline: 'none',
         border: '1px solid #ddd'
+    },
+    foodMenuContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        width: '100%',
+        alignItems: 'center'
+    },
+    foodItem: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#ddd',
+        padding: 10,
+        borderRadius: 10,
+        marginTop: 5,
+        marginBottom: 5
     }
 };
 
