@@ -6,9 +6,12 @@ class CreateRestaurant extends Component {
         super(props);
         this.state = {
             menuList: [],
+            offerList: [],
             foodType: '',
             foodName: '',
-            foodPrice: ''
+            foodPrice: '',
+            offerDesc: '',
+            offerImg: ''
         };
     }
 
@@ -18,6 +21,10 @@ class CreateRestaurant extends Component {
                 item.type === this.state.foodType &&
                 item.name === this.state.foodName
         );
+
+        if (!this.state.foodName || !this.state.foodPrice || !this.state.foodType) {
+            return;
+        }
 
         // item already exists, so edit it
         if (index > -1) {
@@ -53,27 +60,94 @@ class CreateRestaurant extends Component {
         }
     }
 
+    addOfferItem() {
+        if (!this.state.offerDesc || !this.state.offerImg) {
+            return;
+        }
+
+        const newItem = {
+            description: this.state.offerDesc,
+            image: this.state.offerImg
+        };
+
+        this.setState({
+            offerList: [...this.state.offerList, newItem],
+            offerDesc: '',
+            offerImg: ''
+        });
+    }
+
     onInputChange(type, e) {
         this.setState({ [type]: e.target.value });
+    }
+
+    onFoodEdit(item) {
+        this.setState({
+            foodName: item.name,
+            foodType: item.type,
+            foodPrice: item.price
+        });
+        console.log(item);
+    }
+
+    onFoodRemove(item) {
+        this.setState({
+            menuList: this.state.menuList.filter(
+                i => item.type !== i.type && item.name !== i.name
+            )
+        });
+    }
+
+    onOfferRemove(item) {
+        this.setState({
+            offerList: this.state.offerList.filter(i => i.description !== item.description)
+        });
     }
 
     renderFoodMenuItems() {
         return this.state.menuList.map(item => {
             return (
                 <div style={styles.foodItem} key={`${item.name}-${item.type}`}>
-                    <div style={{ width: '25%' }}>
-                        {item.type}
-                    </div>
-                    <div style={{ width: '25%' }}>
-                        {item.name}
-                    </div>
-                    <div style={{ width: '25%' }}>
-                        {item.price}
-                    </div>
+                    <div style={{ width: '25%' }}>{item.type}</div>
+                    <div style={{ width: '25%' }}>{item.name}</div>
+                    <div style={{ width: '25%' }}>{item.price}</div>
                     <div style={{ display: 'flex', width: 'auto' }}>
-                        <i className='fa fa-edit' />
-                        <i className='fa fa-trash' style={{ marginLeft: 5 }} />
+                        <i
+                            className='fa fa-edit'
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => this.onFoodEdit(item)}
+                        />
+                        <i
+                            className='fa fa-trash'
+                            style={{ marginLeft: 5, cursor: 'pointer' }}
+                            onClick={() => this.onFoodRemove(item)}
+                        />
                     </div>
+                </div>
+            );
+        });
+    }
+
+    renderOfferItems() {
+        return this.state.offerList.map(item => {
+            return (
+                <div
+                    style={{
+                        width: '100%',
+                        padding: 10,
+                        backgroundColor: '#ddd',
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        marginTop: 5,
+                        marginBottom: 5
+                    }}
+                >
+                    <p>{item.description}</p>
+                    <i
+                        className='fa fa-trash'
+                        style={{ marginLeft: 5, cursor: 'pointer' }}
+                        onClick={() => this.onOfferRemove(item)}
+                    />
                 </div>
             );
         });
@@ -221,6 +295,7 @@ class CreateRestaurant extends Component {
                                 </div>
                             </div>
                         </div>
+                        {/* ------------------------- Food Menu Container Start -------------------- */}
                         <div
                             style={{
                                 ...styles.fieldSet,
@@ -287,6 +362,64 @@ class CreateRestaurant extends Component {
                                 />
                             </div>
                         </div>
+                        {/* --------------------- Food Menu Conainer End -------------------- */}
+                        {/* ------------------------- Offer Container Start -------------------- */}
+                        <div
+                            style={{
+                                ...styles.fieldSet,
+                                flexDirection: 'column',
+                                alignItems: 'flex-start',
+                                flexGrow: 1,
+                                marginTop: 30
+                            }}
+                        >
+                            <p style={{ marginBottom: 10 }}>Offers</p>
+
+                            {/* --------- Show added food items here ------------- */}
+                            <div
+                                style={{
+                                    flexDirection: 'column',
+                                    display: 'flex',
+                                    width: '100%'
+                                }}
+                            >
+                                {this.renderOfferItems()}
+                            </div>
+                            {/* -------------------------------------------------- */}
+                            <div style={styles.foodMenuContainer}>
+                                <div>
+                                    <label htmlFor='name'>Description</label>
+                                    <input
+                                        style={{ ...styles.input, width: 230 }}
+                                        type='text'
+                                        name='name'
+                                        value={this.state.offerDesc}
+                                        onChange={e =>
+                                            this.onInputChange('offerDesc', e)
+                                        }
+                                    />
+                                </div>
+
+                                <div>
+                                    <label htmlFor='name'>Image</label>
+                                    <input
+                                        style={{ ...styles.input, width: 230 }}
+                                        type='text'
+                                        name='name'
+                                        value={this.state.offerImg}
+                                        onChange={e =>
+                                            this.onInputChange('offerImg', e)
+                                        }
+                                    />
+                                </div>
+                                <i
+                                    className='fa fa-check'
+                                    style={{ cursor: 'pointer' }}
+                                    onClick={this.addOfferItem.bind(this)}
+                                />
+                            </div>
+                        </div>
+                        {/* --------------------- Offers Container End -------------------- */}
                     </form>
                 </div>
             </div>
