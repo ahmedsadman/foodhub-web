@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
-import { Navbar } from '../components/Navbar';
+import Navbar from '../components/Navbar';
 import SearchResult from './SearchResult';
 import DetailsPage from './Details';
 import styles from '../views/SearchResult.module.css';
