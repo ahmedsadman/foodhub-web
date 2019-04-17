@@ -11,7 +11,7 @@ const MainPage = (props) => {
             <nav>
                 <Navbar />
             </nav>
-
+            
             <BrowserRouter>
                 <div>
                     <Route

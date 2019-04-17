@@ -62,18 +62,33 @@ class Home extends React.Component {
                 <nav>
                     <div className={styles.row}>
                         <ul className={styles.mainNav}>
-                            <li>
+                            <li className={styles.mainNavList}>
                                 <Link to='/'>About us</Link>
                             </li>
-                            <li>
+                            <li className={styles.mainNavList}>
                                 <Link to='/'>Food Photography</Link>
                             </li>
-                            <li>
+                            <li className={styles.mainNavList}>
                                 <Link to='/'>Blog</Link>
                             </li>
-                            <li>
+                            <li className={styles.mainNavList}>
                                 <Link to='/auth'>Sign in</Link>
                             </li>
+                            <li className={`${styles.mainNavList} ${styles.dropDown}`}>         
+                                <Link className={`${styles.navlink} ${styles.navlistlink}`} to='/'>
+                                    Welcome
+                                    <i className='fa fa-caret-down' />{' '}
+                                </Link>
+                                <ul className={styles.dropDownContent}>
+                                    <li className={styles.dropBox}>
+                                        <Link to= '/'>Your Profile</Link>
+                                    </li>
+                                    <li className={styles.dropBox}>
+                                        <Link to= '/'>Sign Out</Link>
+                                    </li>
+                                    
+                                </ul>
+                             </li>
                         </ul>
                     </div>
                 </nav>

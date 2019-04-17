@@ -5,11 +5,15 @@ import styles from '../views/components/Navbar.module.css';
 export const Navbar = props => {
     return (
         <div className={styles.row}>
+            <div style={{ clear: 'both' }}></div>
             <ul className={styles.nav}>
-                <Link className={`${styles.btn} ${styles.navlist}`} to='/'>
-                    {' '}
-                    <i className='fa fa-search' />{' '}
-                </Link>
+                
+                <li>
+                    <Link className={`${styles.btn} ${styles.navlist}`} to='/'>
+                        {' '}
+                        <i className='fa fa-search' />{' '}
+                    </Link>
+                </li>
                 <li className={`${styles.navlist} ${styles.navInput}`}>
                     <input
                         type='text'
@@ -26,6 +30,23 @@ export const Navbar = props => {
                         placeholder='search by food'
                     />
                 </li>
+
+                <li className={`${styles.navlist} ${styles.dropDown}`}> 
+                    <Link className={`${styles.navlink} ${styles.navlistlink}`} to='/'>
+                        Welcome
+                        <i className='fa fa-caret-down' />{' '}
+                    </Link>
+                    <ul className={styles.dropDownContent} style={{ padding: 10 }}>
+                        <li style={{ width: '100%' }}>
+                            <Link  className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Your Profile</Link>
+                        </li>
+                        <li style={{ width: '100%' }}>
+                            <Link className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Sign Out</Link>
+                        </li>
+                        
+                    </ul>
+                </li>
+                
                 <li className={styles.navlist}>
                     {' '}
                     <Link
@@ -63,7 +84,10 @@ export const Navbar = props => {
                         About us
                     </Link>
                 </li>
+                
+                <div style={{ clear: 'both '}}></div>
             </ul>
+            
         </div>
     );
 };
