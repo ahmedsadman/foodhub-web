@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { logoutUser } from '../actions';
 import styles from '../views/components/Navbar.module.css';
 
 class Navbar extends Component {
-    componentDidMount() {
-        console.log('inside navbar');
-        console.log(this.props.auth);
+    handleLogout() {
+        this.props.logoutUser();
     }
-    
+
     renderAuthComp() {
         // render signin/signup components
         return (
@@ -38,10 +38,10 @@ class Navbar extends Component {
                 </Link>
                 <ul className={styles.dropDownContent} style={{ padding: 10 }}>
                     <li style={{ width: '100%' }}>
-                        <Link  className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Your Profile</Link>
+                        <Link  className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to='/'>Your Profile</Link>
                     </li>
                     <li style={{ width: '100%' }}>
-                        <Link className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Sign Out</Link>
+                        <Link className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} onClick={this.handleLogout.bind(this)} to='/'>Sign Out</Link>
                     </li>
                     
                 </ul>
@@ -131,5 +131,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    {}
+    { logoutUser }
 )(withRouter(Navbar));

@@ -1,5 +1,7 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { logoutUser } from '../actions';
 import styles from '../views/Home.module.css';
 
 class Home extends React.Component {
@@ -17,6 +19,10 @@ class Home extends React.Component {
         if (this.state.food || this.state.area) {
             this.setState({ redirect: true });
         }
+    }
+
+    handleLogout() {
+        this.props.logoutUser();
     }
 
     redirectSearch() {
@@ -56,6 +62,45 @@ class Home extends React.Component {
         this.foodSuggestion.style.pointerEvents = 'all';
     }
 
+    renderAuthComp() {
+        // renders signin components
+        return (
+            <li className={styles.mainNavList}>
+                <Link to='/auth'>Sign in</Link>
+            </li>
+        );
+    }
+
+    renderWelcomeComp() {
+        // renders post-login comp
+        return (
+            <li className={`${styles.mainNavList} ${styles.dropDown}`}>
+                <Link
+                    className={`${styles.navlink} ${styles.navlistlink}`}
+                    to='/'
+                >
+                    Welcome
+                    <i className='fa fa-caret-down' />{' '}
+                </Link>
+                <ul className={styles.dropDownContent}>
+                    <li className={styles.dropBox}>
+                        <Link to='/'>Your Profile</Link>
+                    </li>
+                    <li className={styles.dropBox}>
+                        <Link to='/' onClick={this.handleLogout.bind(this)}>Sign Out</Link>
+                    </li>
+                </ul>
+            </li>
+        );
+    }
+
+    renderAuthOrWelcome() {
+        if (this.props.auth.isLoggedIn) {
+            return this.renderWelcomeComp();
+        }
+        return this.renderAuthComp();
+    }
+
     render() {
         return (
             <header className={styles.header} style={{ position: 'relative' }}>
@@ -71,24 +116,8 @@ class Home extends React.Component {
                             <li className={styles.mainNavList}>
                                 <Link to='/'>Blog</Link>
                             </li>
-                            <li className={styles.mainNavList}>
-                                <Link to='/auth'>Sign in</Link>
-                            </li>
-                            <li className={`${styles.mainNavList} ${styles.dropDown}`}>         
-                                <Link className={`${styles.navlink} ${styles.navlistlink}`} to='/'>
-                                    Welcome
-                                    <i className='fa fa-caret-down' />{' '}
-                                </Link>
-                                <ul className={styles.dropDownContent}>
-                                    <li className={styles.dropBox}>
-                                        <Link to= '/'>Your Profile</Link>
-                                    </li>
-                                    <li className={styles.dropBox}>
-                                        <Link to= '/'>Sign Out</Link>
-                                    </li>
-                                    
-                                </ul>
-                             </li>
+                            {/* sign in here */}
+                            {this.renderAuthOrWelcome()}
                         </ul>
                     </div>
                 </nav>
@@ -146,4 +175,10 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+};
+
+export default connect(mapStateToProps, { logoutUser })(Home);

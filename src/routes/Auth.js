@@ -1,16 +1,29 @@
 import React, { Component } from 'react';
+import { api } from '../utils/api';
+import { connect } from 'react-redux';
+import { loginUser } from '../actions';
 import styles from '../views/Auth.module.css';
 
 class Auth extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: false
+            isLogin: false,
+            username: '',
+            password: ''
         };
     }
 
     componentDidMount() {
         console.log(this.props.location.state);
+    }
+
+    onChangeInput(type, e) {
+        this.setState({ [type]: e.target.value });
+    }
+
+    handleLogin() {
+        this.props.loginUser(this.state.username, this.state.password);
     }
 
     getLoginStyle() {
@@ -24,6 +37,14 @@ class Auth extends Component {
         return {
             opacity: this.state.isLogin ? 0 : 1,
             pointerEvents: this.state.isLogin ? 'none' : 'all'
+        }
+    }
+
+    renderError() {
+        if (this.props.auth.error) {
+            return (
+                <p style={{ textAlign: 'center', color: 'red' }}>{this.props.auth.error}</p>
+            );
         }
     }
 
@@ -46,15 +67,20 @@ class Auth extends Component {
                             type='username'
                             name='username'
                             placeholder='Username'
+                            value={this.state.username}
                             className={styles.input}
+                            onChange={(e) => this.onChangeInput('username', e)}
                         />
                         <input
                             type='password'
                             name='password'
                             placeholder='Password'
+                            value={this.state.password}
                             className={styles.input}
+                            onChange={(e) => this.onChangeInput('password', e)}
                         />
-                        <div className={styles.btn} onClick={() => console.log('Clicked login')}>
+                        {this.renderError()}
+                        <div className={styles.btn} onClick={this.handleLogin.bind(this)}>
                             <b>Login</b>
                         </div>
                     </div>
@@ -99,4 +125,10 @@ class Auth extends Component {
     }
 }
 
-export default Auth;
+const mapStateToProps = state => {
+    return {
+        auth: state.auth
+    };
+};
+
+export default connect(mapStateToProps, { loginUser })(Auth);
