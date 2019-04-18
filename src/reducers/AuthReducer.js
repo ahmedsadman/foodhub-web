@@ -1,6 +1,7 @@
 const INITIAL_STATE = {
     isLoggedIn: null,
-    redirect: '/'
+    redirect: '/',
+    userData: {}
 };
 
 export default (state = INITIAL_STATE, action) => {
