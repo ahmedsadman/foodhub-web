@@ -9,6 +9,10 @@ class Auth extends Component {
         };
     }
 
+    componentDidMount() {
+        console.log(this.props.location.state);
+    }
+
     getLoginStyle() {
         return {
             opacity: this.state.isLogin ? 1 : 0,

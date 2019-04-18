@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import styles from '../views/components/Navbar.module.css';
 
@@ -9,12 +9,58 @@ class Navbar extends Component {
         console.log(this.props.auth);
     }
     
+    renderAuthComp() {
+        // render signin/signup components
+        return (
+            <li className={styles.navlist}>
+                {' '}
+                <Link
+                    className={`${styles.navlink} ${styles.navlistlink}`}
+                    to={{
+                        pathname: '/auth',
+                        state: {
+                            from: this.props.location
+                        }
+                    }}
+                >
+                    Sign in
+                </Link>
+            </li>
+        )
+    }
+
+    renderWelcomeComp() {
+        return (
+            <li className={`${styles.navlist} ${styles.dropDown}`}> 
+                <Link className={`${styles.navlink} ${styles.navlistlink}`} to='/'>
+                    Welcome
+                    <i className='fa fa-caret-down' />{' '}
+                </Link>
+                <ul className={styles.dropDownContent} style={{ padding: 10 }}>
+                    <li style={{ width: '100%' }}>
+                        <Link  className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Your Profile</Link>
+                    </li>
+                    <li style={{ width: '100%' }}>
+                        <Link className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Sign Out</Link>
+                    </li>
+                    
+                </ul>
+            </li>
+        )
+    }
+
+    renderAuthOrWelcome() {
+        if (this.props.auth.isLoggedIn) {
+            return this.renderWelcomeComp();
+        }
+        return this.renderAuthComp();
+    }
+
     render() {
         return (
             <div className={styles.row}>
                 <div style={{ clear: 'both' }}></div>
                 <ul className={styles.nav}>
-                    
                     <li>
                         <Link className={`${styles.btn} ${styles.navlist}`} to='/'>
                             {' '}
@@ -37,32 +83,9 @@ class Navbar extends Component {
                             placeholder='search by food'
                         />
                     </li>
-    
-                    <li className={`${styles.navlist} ${styles.dropDown}`}> 
-                        <Link className={`${styles.navlink} ${styles.navlistlink}`} to='/'>
-                            Welcome
-                            <i className='fa fa-caret-down' />{' '}
-                        </Link>
-                        <ul className={styles.dropDownContent} style={{ padding: 10 }}>
-                            <li style={{ width: '100%' }}>
-                                <Link  className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Your Profile</Link>
-                            </li>
-                            <li style={{ width: '100%' }}>
-                                <Link className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to= '/'>Sign Out</Link>
-                            </li>
-                            
-                        </ul>
-                    </li>
                     
-                    <li className={styles.navlist}>
-                        {' '}
-                        <Link
-                            className={`${styles.navlink} ${styles.navlistlink}`}
-                            to='/'
-                        >
-                            Sign in
-                        </Link>
-                    </li>
+                    {/* Sign in components here */}
+                    {this.renderAuthOrWelcome()}
                     <li className={styles.navlist}>
                         {' '}
                         <Link
@@ -109,4 +132,4 @@ const mapStateToProps = state => {
 export default connect(
     mapStateToProps,
     {}
-)(Navbar);
+)(withRouter(Navbar));
