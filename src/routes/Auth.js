@@ -13,7 +13,6 @@ class Auth extends Component {
             isLogin: false,
             username: '',
             password: '',
-            loading: false
         };
     }
 
@@ -26,13 +25,7 @@ class Auth extends Component {
     }
 
     async handleLogin() {
-        this.setState({ loading: true });
-        const success = await this.props.loginUser(this.state.username, this.state.password);
-        if (success) {
-            history.push('/');
-        } else {
-            this.setState({ loading: false });
-        }
+        this.props.loginUser(this.state.username, this.state.password);
     }
 
     getLoginStyle() {
@@ -60,7 +53,7 @@ class Auth extends Component {
     }
 
     renderLoginOrLoader() {
-        if (this.state.loading) {
+        if (this.props.auth.loading) {
             return (
                 <div style={{ position: 'relative', top: '40%', left: '50%' }}>
                     <Spinner size='small' />

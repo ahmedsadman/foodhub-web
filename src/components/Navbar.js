@@ -26,27 +26,51 @@ class Navbar extends Component {
                     Sign in
                 </Link>
             </li>
-        )
+        );
     }
 
     renderWelcomeComp() {
         return (
-            <li className={`${styles.navlist} ${styles.dropDown}`}> 
-                <Link className={`${styles.navlink} ${styles.navlistlink}`} to='/'>
+            <li className={`${styles.navlist} ${styles.dropDown}`}>
+                <Link
+                    className={`${styles.navlink} ${styles.navlistlink}`}
+                    to='/'
+                >
                     Welcome
                     <i className='fa fa-caret-down' />{' '}
                 </Link>
                 <ul className={styles.dropDownContent} style={{ padding: 10 }}>
                     <li style={{ width: '100%' }}>
-                        <Link  className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} to='/'>Your Profile</Link>
+                        <Link
+                            className={`${styles.navlink} ${
+                                styles.navlistlink
+                            }`}
+                            style={{ width: '100%' }}
+                            to='/'
+                        >
+                            Your Profile
+                        </Link>
                     </li>
                     <li style={{ width: '100%' }}>
-                        <Link className={`${styles.navlink} ${styles.navlistlink}`} style={{ width: '100%' }} onClick={this.handleLogout.bind(this)} to='/'>Sign Out</Link>
+                        <Link
+                            className={`${styles.navlink} ${
+                                styles.navlistlink
+                            }`}
+                            style={{ width: '100%' }}
+                            onClick={this.handleLogout.bind(this)}
+                            to={{
+                                pathname: '/',
+                                state: {
+                                    isLogout: true
+                                }
+                            }}
+                        >
+                            Sign Out
+                        </Link>
                     </li>
-                    
                 </ul>
             </li>
-        )
+        );
     }
 
     renderAuthOrWelcome() {
@@ -59,10 +83,13 @@ class Navbar extends Component {
     render() {
         return (
             <div className={styles.row}>
-                <div style={{ clear: 'both' }}></div>
+                <div style={{ clear: 'both' }} />
                 <ul className={styles.nav}>
                     <li>
-                        <Link className={`${styles.btn} ${styles.navlist}`} to='/'>
+                        <Link
+                            className={`${styles.btn} ${styles.navlist}`}
+                            to='/'
+                        >
                             {' '}
                             <i className='fa fa-search' />{' '}
                         </Link>
@@ -83,23 +110,27 @@ class Navbar extends Component {
                             placeholder='search by food'
                         />
                     </li>
-                    
+
                     {/* Sign in components here */}
                     {this.renderAuthOrWelcome()}
                     <li className={styles.navlist}>
                         {' '}
                         <Link
-                            className={`${styles.navlink} ${styles.navlistlink}`}
+                            className={`${styles.navlink} ${
+                                styles.navlistlink
+                            }`}
                             to='/'
                         >
                             Blog
                         </Link>
                     </li>
-    
+
                     <li className={styles.navlist}>
                         {' '}
                         <Link
-                            className={`${styles.navlink} ${styles.navlistlink}`}
+                            className={`${styles.navlink} ${
+                                styles.navlistlink
+                            }`}
                             to='/'
                         >
                             Food Photography
@@ -108,16 +139,17 @@ class Navbar extends Component {
                     <li className={styles.navlist}>
                         {' '}
                         <Link
-                            className={`${styles.navlink} ${styles.navlistlink}`}
+                            className={`${styles.navlink} ${
+                                styles.navlistlink
+                            }`}
                             to='/'
                         >
                             About us
                         </Link>
                     </li>
-                    
-                    <div style={{ clear: 'both '}}></div>
+
+                    <div style={{ clear: 'both ' }} />
                 </ul>
-                
             </div>
         );
     }

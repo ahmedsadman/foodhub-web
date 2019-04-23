@@ -1,8 +1,11 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { logoutUser } from '../actions';
 import styles from '../views/Home.module.css';
+import { history } from '../utils/history';
 
 class Home extends React.Component {
     constructor(props) {
@@ -13,6 +16,22 @@ class Home extends React.Component {
             redirect: false,
             showFoodSuggestion: false
         };
+        this.swal = withReactContent(Swal);
+    }
+
+    componentDidMount() {
+        const { state } = this.props.location;
+        if (state && state.isLogin) {
+            this.showToast('success', 'Login successful');
+        } else if (state && state.isLogout) {
+            this.showToast('success', 'Logout successful');
+        }
+
+        // reset the state
+        history.replace({
+            pathname: this.props.location.pathname,
+            state: {}
+        });
     }
 
     onSearch() {
@@ -21,8 +40,20 @@ class Home extends React.Component {
         }
     }
 
+    showToast(type, text) {
+        this.swal.fire({
+            type,
+            text,
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000,
+            position: 'top',
+        });
+    }
+
     handleLogout() {
         this.props.logoutUser();
+        this.showToast('success', 'Logged out successfully');
     }
 
     redirectSearch() {
