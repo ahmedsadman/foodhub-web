@@ -156,6 +156,10 @@ class RestaurantForm extends Component {
                 facebook: this.state.facebook,
                 instagram: this.state.instagram,
                 contact: this.state.contact
+            },
+            location: {
+                type: 'Point',
+		        coordinates: [22.5, 24.5]
             }
         };
         this.bodyData = data;
