@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { api } from '../utils/api';
 import { connect } from 'react-redux';
 import { loginUser } from '../actions';
+import { Spinner } from '../components/common/Spinner';
 import styles from '../views/Auth.module.css';
+import { history } from '../utils/history';
 
 class Auth extends Component {
     constructor(props) {
@@ -10,7 +12,8 @@ class Auth extends Component {
         this.state = {
             isLogin: false,
             username: '',
-            password: ''
+            password: '',
+            loading: false
         };
     }
 
@@ -22,8 +25,14 @@ class Auth extends Component {
         this.setState({ [type]: e.target.value });
     }
 
-    handleLogin() {
-        this.props.loginUser(this.state.username, this.state.password);
+    async handleLogin() {
+        this.setState({ loading: true });
+        const success = await this.props.loginUser(this.state.username, this.state.password);
+        if (success) {
+            history.push('/');
+        } else {
+            this.setState({ loading: false });
+        }
     }
 
     getLoginStyle() {
@@ -37,15 +46,32 @@ class Auth extends Component {
         return {
             opacity: this.state.isLogin ? 0 : 1,
             pointerEvents: this.state.isLogin ? 'none' : 'all'
-        }
+        };
     }
 
     renderError() {
         if (this.props.auth.error) {
             return (
-                <p style={{ textAlign: 'center', color: 'red' }}>{this.props.auth.error}</p>
+                <p style={{ textAlign: 'center', color: 'red' }}>
+                    {this.props.auth.error}
+                </p>
             );
         }
+    }
+
+    renderLoginOrLoader() {
+        if (this.state.loading) {
+            return (
+                <div style={{ position: 'relative', top: '40%', left: '50%' }}>
+                    <Spinner size='small' />
+                </div>
+            );
+        }
+        return (
+            <div className={styles.btn} onClick={this.handleLogin.bind(this)}>
+                <b>Login</b>
+            </div>
+        );
     }
 
     render() {
@@ -54,11 +80,21 @@ class Auth extends Component {
                 <div className={styles.back}>
                     <div className={styles.LoginQuery}>
                         <p>Have an account?</p>
-                        <div className={styles.btn} onClick={() => this.setState({ isLogin: true })}>Log in</div>
+                        <div
+                            className={styles.btn}
+                            onClick={() => this.setState({ isLogin: true })}
+                        >
+                            Log in
+                        </div>
                     </div>
                     <div className={styles.SignupQuery}>
                         <p>Don't have an account?</p>
-                        <div className={styles.btn} onClick={() => this.setState({ isLogin: false })}>Sign Up</div>
+                        <div
+                            className={styles.btn}
+                            onClick={() => this.setState({ isLogin: false })}
+                        >
+                            Sign Up
+                        </div>
                     </div>
                 </div>
                 <div className={styles.form}>
@@ -69,7 +105,7 @@ class Auth extends Component {
                             placeholder='Username'
                             value={this.state.username}
                             className={styles.input}
-                            onChange={(e) => this.onChangeInput('username', e)}
+                            onChange={e => this.onChangeInput('username', e)}
                         />
                         <input
                             type='password'
@@ -77,14 +113,16 @@ class Auth extends Component {
                             placeholder='Password'
                             value={this.state.password}
                             className={styles.input}
-                            onChange={(e) => this.onChangeInput('password', e)}
+                            onChange={e => this.onChangeInput('password', e)}
                         />
                         {this.renderError()}
-                        <div className={styles.btn} onClick={this.handleLogin.bind(this)}>
-                            <b>Login</b>
-                        </div>
+                        {this.renderLoginOrLoader()}
+                        
                     </div>
-                    <div className={styles.signup} style={this.getSignupStyle()}>
+                    <div
+                        className={styles.signup}
+                        style={this.getSignupStyle()}
+                    >
                         <input
                             type='Name'
                             name='name'
@@ -131,4 +169,7 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { loginUser })(Auth);
+export default connect(
+    mapStateToProps,
+    { loginUser }
+)(Auth);

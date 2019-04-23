@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { history } from '../utils/history';
 import { api } from '../utils/api';
 
 export const loginUser = (username, password) => {
@@ -15,13 +14,15 @@ export const loginUser = (username, password) => {
 
             if (response.data.found) {
                 dispatch({ type: 'LOG_IN', payload: response.data.data });
-                history.push('/');
+                return true;
             } else {
                 dispatch({ type: 'AUTH_ERROR', payload: 'Username/password is invalid' });
+                return false;
             }
             
         } catch (e) {
             console.log(e);
+            return false
         }
     }
 };
