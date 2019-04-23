@@ -1,10 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 
 class RestaurantForm extends Component {
     constructor(props) {
         super(props);
+        this.swal = withReactContent(Swal);
+        this.bodyData = null;
         this.state = {
+            redirect: false,
             menuList: [],
             offerList: [],
             foodType: '',
@@ -38,6 +43,12 @@ class RestaurantForm extends Component {
             poolside: false,
             foodCart: false
         };
+    }
+
+    redirect() {
+        if (this.state.redirect) {
+            return this.props.redirect();
+        }
     }
 
     addFoodItem() {
@@ -111,7 +122,11 @@ class RestaurantForm extends Component {
         return res_type;
     }
 
-    handleFormSubmit(e) {
+    getBodyData() {
+        return this.bodyData;
+    }
+
+    async handleFormSubmit(e) {
         e.preventDefault();
         const restaurant_type = this.createResType();
         const data = {
@@ -143,8 +158,29 @@ class RestaurantForm extends Component {
                 contact: this.state.contact
             }
         };
+        this.bodyData = data;
+        
+        
+        const response = await this.props.onSubmit();
+        
+        await this.showConfirmation(response);
 
-        console.log(data);
+        if (response) this.setState({ redirect: true });
+    }
+
+    showConfirmation(response) {
+        let text, type, title;
+        text = response ? this.props.successMessage : 'An unexpected error occured';
+        type = response ? 'success' : 'error';
+        title = response ? 'Done' : 'Oops...';
+
+
+        return this.swal.fire({
+            type,
+            title,
+            text,
+            allowOutsideClick: false
+        });
     }
 
     onInputChange(type, e) {
@@ -231,6 +267,7 @@ class RestaurantForm extends Component {
     render() {
         return (
             <div style={styles.container}>
+                {this.redirect()}
                 <h1>Create a new restaurant</h1>
                 <div style={styles.formContainer}>
                     <form>
