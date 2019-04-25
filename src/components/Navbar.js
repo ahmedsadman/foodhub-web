@@ -33,6 +33,7 @@ class Navbar extends Component {
         return (
             <li className={`${styles.navlist} ${styles.dropDown}`}>
                 <Link
+                    to={this.props.location.pathname}
                     className={`${styles.navlink} ${styles.navlistlink}`}
                 >
                     Welcome

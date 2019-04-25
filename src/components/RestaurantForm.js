@@ -768,7 +768,7 @@ class RestaurantForm extends Component {
                                 }}
                                 onClick={this.handleFormSubmit.bind(this)}
                             >
-                                Create
+                                {this.props.buttonText}
                             </button>
                         </div>
                     </form>
