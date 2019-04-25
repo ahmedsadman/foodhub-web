@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import SearchResult from './SearchResult';
 import DetailsPage from './Details';
 import CreateRestaurant from './ResCreate';
+import EditRestaurant from './ResEdit';
 import UserProfile from './UserProfile';
 import { history } from '../utils/history';
 import styles from '../views/SearchResult.module.css';
@@ -29,6 +30,10 @@ const MainPage = props => {
                     <ProtectedRoute
                         path='/main/restaurants/create'
                         component={CreateRestaurant}
+                    />
+                    <ProtectedRoute
+                        path='/main/restaurants/edit'
+                        component={EditRestaurant}
                     />
                     <ProtectedRoute
                         path='/main/profile'

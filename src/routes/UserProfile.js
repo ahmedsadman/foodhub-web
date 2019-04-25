@@ -70,6 +70,15 @@ class UserProfile extends Component {
         }
     }
 
+    editRestaurant(item) {
+        history.push({
+            pathname: '/main/restaurants/edit',
+            state: {
+                item
+            } 
+        });
+    }
+
     handleCreateRes() {
         history.push('/main/restaurants/create');
     }
@@ -146,6 +155,7 @@ class UserProfile extends Component {
                                         fontSize: 18
                                     }}
                                     className='fa fa-edit'
+                                    onClick={() => this.editRestaurant(item)}
                                 />
                                 <i
                                     style={{

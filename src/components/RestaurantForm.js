@@ -10,8 +10,6 @@ class RestaurantForm extends Component {
         this.bodyData = null;
         this.state = {
             redirect: false,
-            menuList: [],
-            offerList: [],
             foodType: '',
             foodName: '',
             foodPrice: '',
@@ -22,6 +20,8 @@ class RestaurantForm extends Component {
             name: '',
             resFoodTypes: '',
             banner_image: '',
+            menuList: [],
+            offerList: [],
             area: '',
             district: '',
             hour_start: '',
@@ -49,6 +49,12 @@ class RestaurantForm extends Component {
         if (this.state.redirect) {
             return this.props.redirect();
         }
+    }
+
+    updateStateWithValues(data) {
+        // update state with supplied values, used for editing
+        console.log('setting data');
+        this.setState({ ...this.state, ...data }, () => console.log('after update', this.state));
     }
 
     addFoodItem() {
@@ -102,7 +108,7 @@ class RestaurantForm extends Component {
         }
 
         const newItem = {
-            description: this.state.offerDesc,
+            title: this.state.offerDesc,
             image: this.state.offerImg
         };
 
@@ -139,11 +145,13 @@ class RestaurantForm extends Component {
                 start: this.state.hour_start,
                 end: this.state.hour_end
             },
+            images: [this.state.image1, this.state.image2, this.state.image3],
             address: {
                 area: this.state.area,
                 district: this.state.district
             },
             menu: this.state.menuList,
+            offers: this.state.offerList,
             features: {
                 wifi: this.state.wifi,
                 ac: this.state.ac,
@@ -255,9 +263,9 @@ class RestaurantForm extends Component {
                         marginTop: 5,
                         marginBottom: 5
                     }}
-                    key={item.description}
+                    key={item.title}
                 >
-                    <p>{item.description}</p>
+                    <p>{item.title}</p>
                     <i
                         className='fa fa-trash'
                         style={{ marginLeft: 5, cursor: 'pointer' }}
@@ -272,7 +280,7 @@ class RestaurantForm extends Component {
         return (
             <div style={styles.container}>
                 {this.redirect()}
-                <h1>Create a new restaurant</h1>
+                <h1>{this.props.header}</h1>
                 <div style={styles.formContainer}>
                     <form>
                         <div style={styles.fieldSet}>
@@ -482,6 +490,7 @@ class RestaurantForm extends Component {
                                         name='wifi'
                                         style={{ marginRight: 10 }}
                                         value={this.state.wifi}
+                                        checked={this.state.wifi}
                                         onChange={e =>
                                             this.onInputChange('wifi', e)
                                         }
@@ -495,6 +504,7 @@ class RestaurantForm extends Component {
                                         name='delivery'
                                         style={{ marginRight: 10 }}
                                         value={this.state.delivery}
+                                        checked={this.state.delivery}
                                         onChange={e =>
                                             this.onInputChange('delivery', e)
                                         }
@@ -507,6 +517,7 @@ class RestaurantForm extends Component {
                                         name='ac'
                                         style={{ marginRight: 10 }}
                                         value={this.state.ac}
+                                        checked={this.state.ac}
                                         onChange={e =>
                                             this.onInputChange('ac', e)
                                         }
@@ -519,6 +530,7 @@ class RestaurantForm extends Component {
                                         name='smoking'
                                         style={{ marginRight: 10 }}
                                         value={this.state.smoking_zone}
+                                        checked={this.state.smoking_zone}
                                         onChange={e =>
                                             this.onInputChange(
                                                 'smoking_zone',
@@ -536,6 +548,7 @@ class RestaurantForm extends Component {
                                         name='reservation'
                                         style={{ marginRight: 10 }}
                                         value={this.state.reservation}
+                                        checked={this.state.reservation}
                                         onChange={e =>
                                             this.onInputChange('reservation', e)
                                         }
@@ -550,6 +563,7 @@ class RestaurantForm extends Component {
                                         name='parking'
                                         style={{ marginRight: 10 }}
                                         value={this.state.parking}
+                                        checked={this.state.parking}
                                         onChange={e =>
                                             this.onInputChange('parking', e)
                                         }
@@ -579,6 +593,7 @@ class RestaurantForm extends Component {
                                         name='wifi'
                                         style={{ marginRight: 10 }}
                                         value={this.state.fineDining}
+                                        checked={this.state.fineDining}
                                         onChange={e =>
                                             this.onInputChange('fineDining', e)
                                         }
@@ -592,6 +607,7 @@ class RestaurantForm extends Component {
                                         name='delivery'
                                         style={{ marginRight: 10 }}
                                         value={this.state.rooftop}
+                                        checked={this.state.rooftop}
                                         onChange={e =>
                                             this.onInputChange('rooftop', e)
                                         }
@@ -604,6 +620,7 @@ class RestaurantForm extends Component {
                                         name='ac'
                                         style={{ marginRight: 10 }}
                                         value={this.state.poolside}
+                                        checked={this.state.poolside}
                                         onChange={e =>
                                             this.onInputChange('poolside', e)
                                         }
@@ -616,6 +633,7 @@ class RestaurantForm extends Component {
                                         name='smoking'
                                         style={{ marginRight: 10 }}
                                         value={this.state.foodCart}
+                                        checked={this.state.foodCart}
                                         onChange={e =>
                                             this.onInputChange(
                                                 'foodCart',

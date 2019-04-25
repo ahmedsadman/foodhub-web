@@ -41,6 +41,7 @@ class CreateRestaurant extends Component {
                 ref={(comp) => this.form = comp}
                 onSubmit={this.onSubmit}
                 redirect={this.redirect}
+                header='Create Restaurant'
             />
         );
     }
