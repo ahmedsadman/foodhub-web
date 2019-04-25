@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter, Router, Route } from 'react-router-dom';
+import ProtectedRoute from '../utils/ProtectedRoute';
 import Navbar from '../components/Navbar';
 import SearchResult from './SearchResult';
 import DetailsPage from './Details';
@@ -25,11 +26,11 @@ const MainPage = props => {
                         path='/main/restaurants/details'
                         component={DetailsPage}
                     />
-                    <Route
+                    <ProtectedRoute
                         path='/main/restaurants/create'
                         component={CreateRestaurant}
                     />
-                    <Route
+                    <ProtectedRoute
                         path='/main/profile'
                         component={UserProfile}
                     />

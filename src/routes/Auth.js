@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { api } from '../utils/api';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { loginUser } from '../actions';
 import { Spinner } from '../components/common/Spinner';
 import styles from '../views/Auth.module.css';
@@ -10,14 +12,36 @@ class Auth extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isLogin: false,
+            isLogin: true,
             username: '',
             password: '',
         };
+        this.swal = withReactContent(Swal);
     }
 
     componentDidMount() {
-        console.log(this.props.location.state);
+        const { state } = this.props.location;
+
+        if (state && state.loginRequired) {
+            this.showToast('info', 'You need to login first');
+        }
+
+        // reset the state
+        history.replace({
+            pathname: this.props.location.pathname,
+            state: {}
+        });
+    }
+
+    showToast(type, text) {
+        this.swal.fire({
+            type,
+            text,
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000,
+            position: 'top',
+        });
     }
 
     onChangeInput(type, e) {
