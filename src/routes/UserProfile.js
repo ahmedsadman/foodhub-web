@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import { api } from '../utils/api';
 import { Card } from '../components/common/Card';
 
@@ -9,10 +11,26 @@ class UserProfile extends Component {
         this.state = {
             list: []
         }
+        this.swal = withReactContent(Swal);
     }
 
     componentDidMount() {
         this.fetchRestaurants();
+    }
+
+    showConfirmation(response, message) {
+        let text, type, title;
+        text = response ? message : 'An unexpected error occured';
+        type = response ? 'success' : 'error';
+        title = response ? 'Done' : 'Oops...';
+
+
+        return this.swal.fire({
+            type,
+            title,
+            text,
+            allowOutsideClick: false
+        });
     }
 
     async fetchRestaurants() {
@@ -24,6 +42,22 @@ class UserProfile extends Component {
             this.setState({ list: response.data.data });
         } catch (e) {
             console.log(e);
+        }
+    }
+
+    async removeRestaurant(item) {
+        console.log(item._id);
+        const params = {
+            id: item._id
+        };
+
+        try {
+            const response = await axios.delete(api.deleteRestaurant, { params });
+            this.fetchRestaurants();
+            this.showConfirmation(true, 'Restaurant deleted successfully');
+        } catch (e) {
+            console.log(e);
+            this.showConfirmation(false, 'There was an error while trying to delete the restaurant');
         }
     }
 
@@ -53,7 +87,7 @@ class UserProfile extends Component {
                             </div>
                             <div style={{ ...styles.rowFlex, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 0, right: 0 }}>
                                 <i style={{ marginTop: 3, marginRight: 3, cursor: 'pointer', color: 'gray', fontSize: 18 }} className='fa fa-edit'></i>
-                                <i style={{ cursor: 'pointer', color: 'gray', fontSize: 18 }} className='fa fa-trash'></i>
+                                <i style={{ cursor: 'pointer', color: 'gray', fontSize: 18 }} className='fa fa-trash' onClick={() => this.removeRestaurant(item)}></i>
                             </div>
                         </div>
                         
