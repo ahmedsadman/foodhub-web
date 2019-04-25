@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import SearchResult from './SearchResult';
 import DetailsPage from './Details';
 import CreateRestaurant from './ResCreate';
+import UserProfile from './UserProfile';
 import { history } from '../utils/history';
 import styles from '../views/SearchResult.module.css';
 
@@ -27,6 +28,10 @@ const MainPage = props => {
                     <Route
                         path='/main/restaurants/create'
                         component={CreateRestaurant}
+                    />
+                    <Route
+                        path='/main/profile'
+                        component={UserProfile}
                     />
                 </div>
             </Router>

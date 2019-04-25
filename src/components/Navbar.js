@@ -34,7 +34,6 @@ class Navbar extends Component {
             <li className={`${styles.navlist} ${styles.dropDown}`}>
                 <Link
                     className={`${styles.navlink} ${styles.navlistlink}`}
-                    to='/'
                 >
                     Welcome
                     <i className='fa fa-caret-down' />{' '}
@@ -46,7 +45,7 @@ class Navbar extends Component {
                                 styles.navlistlink
                             }`}
                             style={{ width: '100%' }}
-                            to='/'
+                            to='/main/profile'
                         >
                             Your Profile
                         </Link>

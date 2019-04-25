@@ -115,7 +115,7 @@ class Home extends React.Component {
                 </Link>
                 <ul className={styles.dropDownContent}>
                     <li className={styles.dropBox}>
-                        <Link to='/'>Your Profile</Link>
+                        <Link to='/main/profile'>Your Profile</Link>
                     </li>
                     <li className={styles.dropBox}>
                         <Link to='/' onClick={this.handleLogout.bind(this)}>Sign Out</Link>
