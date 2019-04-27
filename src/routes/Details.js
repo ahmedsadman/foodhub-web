@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import ReviewBox from '../components/ReviewBox';
 import FeatureLabel from '../components/FeatureLabel';
 import { api } from '../utils/api';
 import styles from '../views/Details.module.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
+import Modal from '../components/common/Modal';
+import RatingModal from '../components/RatingModal';
 
 class Details extends Component {
     constructor(props) {
@@ -33,13 +36,26 @@ class Details extends Component {
                 address: {},
                 features: {}
             },
-            loading: false
+            loading: false,
+            showModal: false,
+            foodRating: 0,
+            environmentRating: 0,
+            serviceRating: 0,
+            priceRating: 0
         };
     }
 
     componentDidMount() {
         this.fetchDetails();
     }
+
+    handleReviewButton = () => {
+        this.setState({ showModal: !this.state.showModal });
+    };
+
+    onChangeRating = (rating, name) => {
+        this.setState({ [name]: rating });
+    };
 
     getRatingComment(rating) {
         if (rating >= 4.8) return 'Top of Class';
@@ -66,10 +82,26 @@ class Details extends Component {
     }
 
     getRatingBarStyle(rating) {
-        const width = (rating/5) * 100;
+        const width = (rating / 5) * 100;
         return {
             width: `${width}%`
-        }
+        };
+    }
+
+    renderRatingBox() {
+        const { data } = this.state;
+        return (
+            <RatingModal
+                data={data}
+                onSubmit={this.handleReviewButton}
+                onExit={this.handleReviewButton}
+                onChangeRating={this.onChangeRating}
+                foodRating={this.state.foodRating}
+                environmentRating={this.state.environmentRating}
+                serviceRating={this.state.serviceRating}
+                priceRating={this.state.priceRating}
+            />
+        );
     }
 
     handleScrollTo = elRef => {
@@ -83,14 +115,46 @@ class Details extends Component {
         });
     };
 
+    renderReviewButton() {
+        if (this.props.isLoggedIn) {
+            return (
+                <div
+                    className={styles.button}
+                    style={{ cursor: 'pointer' }}
+                    onClick={this.handleReviewButton}
+                >
+                    <Link
+                        className={styles.btn}
+                        to={this.props.location.pathname}
+                    >
+                        Add Review
+                    </Link>
+                </div>
+            );
+        }
+        return null;
+    }
+
     render() {
         const { data } = this.state;
         return (
             <div className={styles.all}>
+                {/* ------------ Rating Modal Start --------------- */}
+                <Modal show={this.state.showModal}>
+                    {this.renderRatingBox()}
+                </Modal>
+                {/* ------------ Rating Modal End --------------- */}
                 <div id='main' style={inStyle.container}>
                     <div className={styles.box}>
                         <div className={styles.pic}>
-                            <img src={data.banner_image || '/images/css/Mockcover.jpg'} style={{ height: 500 }} alt='' />
+                            <img
+                                src={
+                                    data.banner_image ||
+                                    '/images/css/Mockcover.jpg'
+                                }
+                                style={{ height: 500 }}
+                                alt=''
+                            />
                         </div>
                         <div className={styles.box1}>
                             <ul className={styles.nav}>
@@ -155,15 +219,30 @@ class Details extends Component {
                                 </div>
                                 <div className={styles.orange}>Socials</div>
                                 <div className={styles.ash}>
-                                    <a href={data.social.facebook} target='blank'>Facebook</a>
+                                    <a
+                                        href={data.social.facebook}
+                                        target='blank'
+                                    >
+                                        Facebook
+                                    </a>
                                     <br />
-                                    <a href={data.social.instagram} target='blank'>Instagram</a>
+                                    <a
+                                        href={data.social.instagram}
+                                        target='blank'
+                                    >
+                                        Instagram
+                                    </a>
                                     <br />
                                     <br />
                                 </div>
                                 <div className={styles.orange}>Address</div>
-                                <div className={styles.ash} style={{ textTransform: 'capitalize' }}>
-                                    {`${data.address.district}, ${data.address.area}`}
+                                <div
+                                    className={styles.ash}
+                                    style={{ textTransform: 'capitalize' }}
+                                >
+                                    {`${data.address.district}, ${
+                                        data.address.area
+                                    }`}
                                     <br />
                                     <br />
                                 </div>
@@ -182,7 +261,11 @@ class Details extends Component {
                                         flexDirection: 'row'
                                     }}
                                 >
-                                    <div style={{ textTransform: 'capitalize' }}>{data.name}</div>
+                                    <div
+                                        style={{ textTransform: 'capitalize' }}
+                                    >
+                                        {data.name}
+                                    </div>
                                     <div
                                         style={{
                                             fontSize: '70%',
@@ -192,7 +275,8 @@ class Details extends Component {
                                             margin: '0 10px'
                                         }}
                                     >
-                                        {data.review.average && data.review.average.toFixed(1)}
+                                        {data.review.average &&
+                                            data.review.average.toFixed(1)}
                                     </div>
                                 </div>
                                 <div className={styles.rating}>
@@ -205,17 +289,25 @@ class Details extends Component {
                                         <span
                                             className={styles.individualRating}
                                         >
-                                            {data.review.food && data.review.food.toFixed(1)}
+                                            {data.review.food &&
+                                                data.review.food.toFixed(1)}
                                         </span>
                                         <div className={styles.outerBar}>
-                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.food)}></div>
+                                            <div
+                                                className={styles.innerBar}
+                                                style={this.getRatingBarStyle(
+                                                    data.review.food
+                                                )}
+                                            />
                                         </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            {this.getRatingComment(data.review.food)}
+                                            {this.getRatingComment(
+                                                data.review.food
+                                            )}
                                         </div>
                                     </div>
                                     <div
@@ -227,17 +319,27 @@ class Details extends Component {
                                         <span
                                             className={styles.individualRating}
                                         >
-                                            {data.review.environment && data.review.environment.toFixed(1)}
+                                            {data.review.environment &&
+                                                data.review.environment.toFixed(
+                                                    1
+                                                )}
                                         </span>
                                         <div className={styles.outerBar}>
-                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.environment)}></div>
+                                            <div
+                                                className={styles.innerBar}
+                                                style={this.getRatingBarStyle(
+                                                    data.review.environment
+                                                )}
+                                            />
                                         </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            {this.getRatingComment(data.review.environment)}
+                                            {this.getRatingComment(
+                                                data.review.environment
+                                            )}
                                         </div>
                                     </div>
                                     <div
@@ -249,17 +351,25 @@ class Details extends Component {
                                         <span
                                             className={styles.individualRating}
                                         >
-                                            {data.review.service && data.review.service.toFixed(1)}
+                                            {data.review.service &&
+                                                data.review.service.toFixed(1)}
                                         </span>
                                         <div className={styles.outerBar}>
-                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.service)}></div>
+                                            <div
+                                                className={styles.innerBar}
+                                                style={this.getRatingBarStyle(
+                                                    data.review.service
+                                                )}
+                                            />
                                         </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            {this.getRatingComment(data.review.service)}
+                                            {this.getRatingComment(
+                                                data.review.service
+                                            )}
                                         </div>
                                     </div>
                                     <div
@@ -271,25 +381,29 @@ class Details extends Component {
                                         <span
                                             className={styles.individualRating}
                                         >
-                                            {data.review.price && data.review.price.toFixed(1)}
+                                            {data.review.price &&
+                                                data.review.price.toFixed(1)}
                                         </span>
                                         <div className={styles.outerBar}>
-                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.price)}></div>
+                                            <div
+                                                className={styles.innerBar}
+                                                style={this.getRatingBarStyle(
+                                                    data.review.price
+                                                )}
+                                            />
                                         </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            {this.getRatingComment(data.review.price)}
+                                            {this.getRatingComment(
+                                                data.review.price
+                                            )}
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.button}>
-                                    <Link className={styles.btn} to='/'>
-                                        Add Review
-                                    </Link>
-                                </div>
+                                {this.renderReviewButton()}
                             </div>
                             <div className={styles.rightBar}>
                                 <div className={styles.orange}>Price Range</div>
@@ -300,12 +414,36 @@ class Details extends Component {
                                 </div>
 
                                 <div className={styles.medium}>
-                                    <FeatureLabel label='Air Conditioned' feature={data.features.ac} styles={styles} />
-                                    <FeatureLabel label='Takes Reservations' feature={data.features.reservation} styles={styles} />
-                                    <FeatureLabel label='Wifi Available' feature={data.features.wifi} styles={styles} />
-                                    <FeatureLabel label='Smoking Zone' feature={data.features.smoking_zone} styles={styles} />
-                                    <FeatureLabel label='Parking Space' feature={data.features.parking} styles={styles} />
-                                    <FeatureLabel label='Delivery' feature={data.features.delivery} styles={styles} />
+                                    <FeatureLabel
+                                        label='Air Conditioned'
+                                        feature={data.features.ac}
+                                        styles={styles}
+                                    />
+                                    <FeatureLabel
+                                        label='Takes Reservations'
+                                        feature={data.features.reservation}
+                                        styles={styles}
+                                    />
+                                    <FeatureLabel
+                                        label='Wifi Available'
+                                        feature={data.features.wifi}
+                                        styles={styles}
+                                    />
+                                    <FeatureLabel
+                                        label='Smoking Zone'
+                                        feature={data.features.smoking_zone}
+                                        styles={styles}
+                                    />
+                                    <FeatureLabel
+                                        label='Parking Space'
+                                        feature={data.features.parking}
+                                        styles={styles}
+                                    />
+                                    <FeatureLabel
+                                        label='Delivery'
+                                        feature={data.features.delivery}
+                                        styles={styles}
+                                    />
                                 </div>
                             </div>
                         </div>
@@ -409,4 +547,13 @@ const inStyle = {
     }
 };
 
-export default Details;
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.auth.isLoggedIn
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    {}
+)(Details);
