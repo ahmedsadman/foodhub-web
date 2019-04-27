@@ -3,8 +3,8 @@ import { Card } from './common/Card';
 
 export const RestaurantCard = props => {
     return (
-        <Card style={{ marginBottom: 15 }}>
-            <div style={styles.mainContainer}>
+        <Card style={{ marginBottom: 15, cursor: 'pointer' }}>
+            <div style={styles.mainContainer} onClick={props.onClick}>
                 <img
                     src={props.banner_image}
                     alt=''
