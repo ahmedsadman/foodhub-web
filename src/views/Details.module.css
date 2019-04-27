@@ -13,3 +13,326 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+
+.box{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.pic{
+	flex: 4;
+	
+	background-color: #c15511;
+	height: 300px;
+}
+
+.pic img{
+	width: 1140px;
+}
+
+.name{
+	position: relative;
+	top: -50px;
+	left: 20px;
+	color: black;
+	font-size: 50px;
+}
+.box1{
+	padding: 0px;
+	flex: 1;
+}
+
+
+
+.box3{
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 10px;
+	flex: 3;
+	
+}
+
+.offers{
+	display: flex;
+	margin-top: -30px;
+}
+.offer{
+	
+	background-color:#fff;
+	border: 3px solid #E1DEDE;
+	width: 260px;
+	height: 350px;
+	justify-content: space-around;
+	margin: 5px;
+}
+
+.offer img{
+	width: 250px;
+	height: 250px;
+	margin: 3px;
+	
+}
+
+
+
+
+.blocks{
+	display: flex;
+}
+
+.blocks img{
+	width: auto;
+	height: 300px;
+	border: 3px solid #E1DEDE;
+}
+
+.box5{
+	
+	margin-bottom: 10px;
+
+}
+
+.box5 img{
+	height: 200px;
+}
+
+.nav{
+	background-color: #e67e22;
+	list-style: none;
+	margin: 0 !important;
+	padding: 0 !important;
+	overflow: visible  !important;	
+	padding: 10px 20px !important;
+	color: #E1DEDE;
+	font-size: 25px;
+}
+
+.navlist{
+	margin-top: 0px !important;
+	margin-left: 40px !important;
+	float: left;
+	cursor: pointer;
+}
+
+.navlistlink:link,
+.navlistlink:visited{
+	padding: 8px 0 !important;
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 60%;
+	border-bottom: 2px solid transperent;
+	transition: border 0.2s;
+}
+
+.navlistlink:hover,
+.navlistlink:active{
+
+	color: #fff;
+	text-decoration: none;
+	text-transform: uppercase;
+	font-size: 60%;
+	border-bottom: 2px solid #c15511;
+}
+
+
+.navlink{
+	float: right !important;
+	color: #fff;
+	font-size: 20px; 
+	border-bottom: 2px solid #fff; 
+		
+}
+.box2{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: row;
+	padding: 0px;
+	flex: 1;
+	
+}
+
+.leftBar{
+	flex:2;
+	padding-left: 10px;
+	
+}
+
+.reviewRatings{
+	padding: 10px;
+
+	display: flex;
+	flex-direction: column;
+	flex:4;	
+	
+
+}
+
+.rightBar{
+	padding-right: 10px;
+	text-align: right;
+	flex: 2;		
+}
+
+.orange{
+	color: #ed7d31;
+}
+.ash{
+	color: #504e4e;
+}
+
+.rating{
+	padding: 20px;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	font-size: 20px;
+}
+
+.food{
+	padding: 5px;
+	width: 250px;
+	
+}
+.environment{
+	padding: 5px;
+	width: 250px;
+	
+}
+.service{
+	margin-top: 10px;
+	padding: 5px;
+	width: 250px;
+	
+
+}
+.price{
+	margin-top: 10px;
+	padding: 5px;
+	width: 250px;
+	
+
+}
+
+.button{
+	width: 100%;
+	height: 50px;
+	padding: 15px;
+	background-color: #e67e22;
+	color: #fff;
+	border-radius: 10px;
+	text-align: center;
+	
+}
+
+.btn{
+	text-decoration: none;
+	color: #fff;
+	font-size: 25px;
+}
+
+.bar{
+	width: 150px;
+	height: 20px;
+	background-color: #e67e22;
+	border: 2px solid #c15511;
+	border-radius: 10%;
+	margin-bottom: 20px;
+
+}
+.small{
+	font-size: 15px;
+}
+.large{
+	font-size: 30px;
+}
+.medium{
+	font-size: 20px;
+}
+
+.map{
+	width: 80%;
+	height: 170px;
+	background-color: #ed7d31;
+}
+
+.reviewBlock{
+	height: 150px;
+	width: 800px;
+	border: 3px solid #E1DEDE;
+	border-radius: 10px;
+	background-color: #fff;
+}
+
+.top{
+	display: flex;
+
+}
+.intro{
+	display: flex;
+	padding: 10px;
+	justify-content: center;
+
+}
+.proPic{
+	margin-top: -5px;
+	margin-right: 5px;
+	width: 50px;
+	height: 50px;
+	border: 2px solid #E1DEDE;
+	border-radius: 30px;
+}
+
+.icon{
+	display: flex;
+	color: #e67e22;
+	text-decoration: none;
+	padding: 10px;
+	
+}
+
+icon i{
+	
+	background-color:  #e67e22;
+}
+
+
+
+.comment{
+	display: flex;
+	padding: 10px;
+	
+
+}
+.black{
+	color: red;
+}
+
+.comment h7{
+	background-color: #c15511;
+	color: black;
+	height: 25px;
+	padding: 5px;
+	margin: 3px;
+	margin-top: -3px;
+}
+
+.comment h4{
+	color: black;
+}
+
+
+
+.payment img{
+	width: auto;
+	height: 40px;
+}
+
+
+
+
+
