@@ -24,7 +24,7 @@ const MainPage = props => {
                         component={SearchResult}
                     />
                     <Route
-                        path='/main/restaurants/details'
+                        path='/main/restaurants/details/:id'
                         component={DetailsPage}
                     />
                     <ProtectedRoute

@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
+import axios from 'axios';
 import ReviewBox from '../components/ReviewBox';
+import FeatureLabel from '../components/FeatureLabel';
+import { api } from '../utils/api';
 import styles from '../views/Details.module.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 
@@ -23,10 +26,50 @@ class Details extends Component {
                 thumbnail: 'http://lorempixel.com/250/150/nature/3/'
             }
         ];
+        this.state = {
+            data: {
+                review: {},
+                social: {},
+                address: {},
+                features: {}
+            },
+            loading: false
+        };
     }
 
     componentDidMount() {
-        console.log(this.props.match.params);
+        this.fetchDetails();
+    }
+
+    getRatingComment(rating) {
+        if (rating >= 4.8) return 'Top of Class';
+        else if (rating >= 4.5) return 'Perfect';
+        else if (rating >= 4.0) return 'Satisfactory';
+        else if (rating >= 3.5) return 'Not Satisfactory';
+        else return 'Mediocore';
+    }
+
+    async fetchDetails() {
+        this.setState({ loading: true });
+        const params = {
+            id: this.props.match.params.id
+        };
+
+        try {
+            const response = await axios.get(api.restaurantDetails, { params });
+            console.log(response.data.data);
+            this.setState({ loading: false, data: response.data.data });
+        } catch (e) {
+            console.log(e);
+            this.setState({ loading: false });
+        }
+    }
+
+    getRatingBarStyle(rating) {
+        const width = (rating/5) * 100;
+        return {
+            width: `${width}%`
+        }
     }
 
     handleScrollTo = elRef => {
@@ -41,12 +84,13 @@ class Details extends Component {
     };
 
     render() {
+        const { data } = this.state;
         return (
             <div className={styles.all}>
                 <div id='main' style={inStyle.container}>
                     <div className={styles.box}>
                         <div className={styles.pic}>
-                            <img src='/images/css/Mockcover.jpg' alt='' />
+                            <img src={data.banner_image || '/images/css/Mockcover.jpg'} style={{ height: 500 }} alt='' />
                         </div>
                         <div className={styles.box1}>
                             <ul className={styles.nav}>
@@ -105,21 +149,21 @@ class Details extends Component {
                                     Contact Number
                                 </div>
                                 <div className={styles.ash}>
-                                    +8801915473371
+                                    {data.social.contact}
                                     <br />
                                     <br />
                                 </div>
                                 <div className={styles.orange}>Socials</div>
                                 <div className={styles.ash}>
-                                    Facebook
+                                    <a href={data.social.facebook} target='blank'>Facebook</a>
                                     <br />
-                                    Instagram
+                                    <a href={data.social.instagram} target='blank'>Instagram</a>
                                     <br />
                                     <br />
                                 </div>
                                 <div className={styles.orange}>Address</div>
-                                <div className={styles.ash}>
-                                    kachukhet
+                                <div className={styles.ash} style={{ textTransform: 'capitalize' }}>
+                                    {`${data.address.district}, ${data.address.area}`}
                                     <br />
                                     <br />
                                 </div>
@@ -138,8 +182,18 @@ class Details extends Component {
                                         flexDirection: 'row'
                                     }}
                                 >
-                                    <div>Takeout</div>
-                                    <div style={{ fontSize: '70%', padding: 5, backgroundColor: '#ddd', borderRadius: 5, margin: '0 10px' }}>4.8</div>
+                                    <div style={{ textTransform: 'capitalize' }}>{data.name}</div>
+                                    <div
+                                        style={{
+                                            fontSize: '70%',
+                                            padding: 5,
+                                            backgroundColor: '#ddd',
+                                            borderRadius: 5,
+                                            margin: '0 10px'
+                                        }}
+                                    >
+                                        {data.review.average && data.review.average.toFixed(1)}
+                                    </div>
                                 </div>
                                 <div className={styles.rating}>
                                     <div
@@ -148,15 +202,20 @@ class Details extends Component {
                                         }`}
                                     >
                                         Food
-                                        <span className={styles.individualRating}>4.5</span>
+                                        <span
+                                            className={styles.individualRating}
+                                        >
+                                            {data.review.food && data.review.food.toFixed(1)}
+                                        </span>
+                                        <div className={styles.outerBar}>
+                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.food)}></div>
+                                        </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            Delicious Food
-                                            <br />
-                                            Juicy Flavours
+                                            {this.getRatingComment(data.review.food)}
                                         </div>
                                     </div>
                                     <div
@@ -165,15 +224,20 @@ class Details extends Component {
                                         }`}
                                     >
                                         Environment
-                                        <span className={styles.individualRating}>4.5</span>
+                                        <span
+                                            className={styles.individualRating}
+                                        >
+                                            {data.review.environment && data.review.environment.toFixed(1)}
+                                        </span>
+                                        <div className={styles.outerBar}>
+                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.environment)}></div>
+                                        </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            Delicious Food
-                                            <br />
-                                            Juicy Flavours
+                                            {this.getRatingComment(data.review.environment)}
                                         </div>
                                     </div>
                                     <div
@@ -182,15 +246,20 @@ class Details extends Component {
                                         }`}
                                     >
                                         Service
-                                        <span className={styles.individualRating}>4.5</span>
+                                        <span
+                                            className={styles.individualRating}
+                                        >
+                                            {data.review.service && data.review.service.toFixed(1)}
+                                        </span>
+                                        <div className={styles.outerBar}>
+                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.service)}></div>
+                                        </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            Delicious Food
-                                            <br />
-                                            Juicy Flavours
+                                            {this.getRatingComment(data.review.service)}
                                         </div>
                                     </div>
                                     <div
@@ -199,15 +268,20 @@ class Details extends Component {
                                         }`}
                                     >
                                         Price
-                                        <span className={styles.individualRating}>4.5</span>
+                                        <span
+                                            className={styles.individualRating}
+                                        >
+                                            {data.review.price && data.review.price.toFixed(1)}
+                                        </span>
+                                        <div className={styles.outerBar}>
+                                            <div className={styles.innerBar} style={this.getRatingBarStyle(data.review.price)}></div>
+                                        </div>
                                         <div
                                             className={`${styles.small} ${
                                                 styles.ash
                                             }`}
                                         >
-                                            Delicious Food
-                                            <br />
-                                            Juicy Flavours
+                                            {this.getRatingComment(data.review.price)}
                                         </div>
                                     </div>
                                 </div>
@@ -226,42 +300,12 @@ class Details extends Component {
                                 </div>
 
                                 <div className={styles.medium}>
-                                    <div className={styles.orange}>
-                                        Air Conditioned
-                                        <i className='fa fa-check-circle' />
-                                        <br />
-                                        <br />
-                                    </div>
-                                    <div className={styles.ash}>
-                                        Takes reservations
-                                        <i className='fa fa-times-circle' />
-                                        <br />
-                                        <br />
-                                    </div>
-                                    <div className={styles.orange}>
-                                        Wifi Available
-                                        <i className='fa fa-check-circle' />
-                                        <br />
-                                        <br />
-                                    </div>
-                                    <div className={styles.orange}>
-                                        Smoking area
-                                        <i className='fa fa-check-circle' />
-                                        <br />
-                                        <br />
-                                    </div>
-                                    <div className={styles.ash}>
-                                        Parking Facility
-                                        <i className='fa fa-times-circle' />
-                                        <br />
-                                        <br />
-                                    </div>
-                                    <div className={styles.orange}>
-                                        Delivery
-                                        <i className='fa fa-check-circle' />
-                                        <br />
-                                        <br />
-                                    </div>
+                                    <FeatureLabel label='Air Conditioned' feature={data.features.ac} styles={styles} />
+                                    <FeatureLabel label='Takes Reservations' feature={data.features.reservation} styles={styles} />
+                                    <FeatureLabel label='Wifi Available' feature={data.features.wifi} styles={styles} />
+                                    <FeatureLabel label='Smoking Zone' feature={data.features.smoking_zone} styles={styles} />
+                                    <FeatureLabel label='Parking Space' feature={data.features.parking} styles={styles} />
+                                    <FeatureLabel label='Delivery' feature={data.features.delivery} styles={styles} />
                                 </div>
                             </div>
                         </div>

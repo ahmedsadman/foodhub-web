@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { RestaurantCard } from '../components/RestaurantCard';
 import { ResBox } from '../components/ResBox';
 import { api } from '../utils/api';
+import { history } from '../utils/history';
 import styles from '../views/SearchResult.module.css';
 
 class SearchResult extends Component {
@@ -37,6 +38,11 @@ class SearchResult extends Component {
         }
     }
 
+    handleCardClick = (item) => {
+        console.log('handle click ran');
+        history.push(`/main/restaurants/details/${item._id}`);
+    }
+
     renderRestaurantsList() {
         if (this.state.listLoading) {
             return <h1 style={{ textAlign: 'center' }}>Loading</h1>;
@@ -52,6 +58,7 @@ class SearchResult extends Component {
                 address={`${item.address.area}, ${item.address.district}`}
                 rating={item.review.average}
                 banner_image={item.banner_image}
+                onClick={() => this.handleCardClick(item)}
             />
         ));
     }

@@ -6,5 +6,6 @@ export const api = {
     deleteRestaurant: `${baseURL}/admin/restaurants/delete`,
     userRestaurant: `${baseURL}/restaurant/user`,
     updateRestaurant: (id) => `${baseURL}/admin/restaurants/update/${id}`,
+    restaurantDetails: `${baseURL}/restaurant/details`,
     login: `${baseURL}/auth/login`
 };
