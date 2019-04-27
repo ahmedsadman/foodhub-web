@@ -56,11 +56,20 @@ class EditRestaurant extends Component {
 
     onSubmit = async () => {
         const data = this.form.getBodyData();
-        console.log(data);
+        const { item } = this.props.location.state;
+        
+        try {
+            const response = await axios.patch(api.updateRestaurant(item._id), data);
+            console.log(response.data);
+            return true;
+        } catch (e) {
+            console.log(e);
+            return false;
+        }
     }
 
     redirect = () => {
-        return <Redirect to='/' />;
+        return <Redirect to='/main/profile' />;
     }
 
     render() {

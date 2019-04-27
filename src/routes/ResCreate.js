@@ -29,7 +29,7 @@ class CreateRestaurant extends Component {
     }
 
     redirect = () => {
-        return <Redirect to='/' />;
+        return <Redirect to='/main/profile' />;
     }
 
     render() {
