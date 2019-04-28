@@ -9,7 +9,9 @@ const RatingModal = ({
     foodRating,
     environmentRating,
     serviceRating,
-    priceRating
+    priceRating,
+    comment,
+    onChangeComment
 }) => {
     const starRatingConfig = {
         starRatedColor: 'orange',
@@ -123,7 +125,7 @@ const RatingModal = ({
                     }}
                 >
                     <span>Comments</span>
-                    <textarea style={inStyle.textarea} />
+                    <textarea style={inStyle.textarea} value={comment} onChange={onChangeComment} />
                 </div>
             </div>
             <button onClick={onSubmit} style={inStyle.modalButton}>

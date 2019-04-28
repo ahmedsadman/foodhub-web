@@ -2,28 +2,23 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ReviewBox = props => {
-    const { styles } = props;
+    const { styles, item } = props;
+    const avgRating = (item.food + item.service + item.environment + item.price) / 4;
 
     return (
         <div>
             <div className={styles.top}>
                 <div className={styles.intro}>
-                    <img
-                        className={styles.proPic}
-                        src='/images/css/Tarik.jpg'
-                        alt=''
-                    />
+                    <i className='fa fa-user-circle' style={{ fontSize: 30, display: 'inline-block', marginRight: 10 }}></i>
                     <div>
-                        <h3 className={styles.orange}>Dewan Tarikul Mannan</h3>
+                        <h3 className={styles.orange}>{item.userId.username}</h3>
                     </div>
                 </div>
             </div>
 
             <div className={styles.comment}>
-                <h6>4.8</h6>
-                Amazing Place! Nice Ambience. The best part is premium quality
-                burgers at such moderate cost. And the cold coffee is best. Best
-                place for students.
+                <h6>{avgRating.toFixed(1)}</h6>
+                {item.comment}
             </div>
         </div>
     );

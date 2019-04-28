@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import ImageGallery from 'react-image-gallery';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 import axios from 'axios';
 import ReviewBox from '../components/ReviewBox';
 import FeatureLabel from '../components/FeatureLabel';
@@ -15,6 +17,7 @@ class Details extends Component {
     constructor(props) {
         super(props);
         this.reviewSection = null;
+        this.swal = withReactContent(Swal);
         this.images = [
             {
                 original: 'http://lorempixel.com/1000/600/nature/1/',
@@ -36,17 +39,37 @@ class Details extends Component {
                 address: {},
                 features: {}
             },
+            reviews: [],
             loading: false,
             showModal: false,
             foodRating: 0,
             environmentRating: 0,
             serviceRating: 0,
-            priceRating: 0
+            priceRating: 0,
+            comment: '',
+            reviewDone: false
         };
     }
 
     componentDidMount() {
         this.fetchDetails();
+        this.getReviews({});
+        this.setReviewState();
+    }
+
+    showConfirmation(response, message) {
+        let text, type, title;
+        text = response ? message : 'An unexpected error occured';
+        type = response ? 'success' : 'error';
+        title = response ? 'Done' : 'Oops...';
+
+
+        return this.swal.fire({
+            type,
+            title,
+            text,
+            allowOutsideClick: false
+        });
     }
 
     handleReviewButton = () => {
@@ -56,6 +79,10 @@ class Details extends Component {
     onChangeRating = (rating, name) => {
         this.setState({ [name]: rating });
     };
+
+    onChangeComment = (e) => {
+        this.setState({ comment: e.target.value });
+    }
 
     getRatingComment(rating) {
         if (rating >= 4.8) return 'Top of Class';
@@ -88,18 +115,74 @@ class Details extends Component {
         };
     }
 
+    getReviews = async (params) => {
+        try {
+            // url for review and getReview restaurant is same, only method is different
+            const response = await axios.get(api.reviewRestaurant(this.props.match.params.id), { params });
+            console.log(response.data);
+
+            // if param is not passed, it means we want all reviews, so update the state
+            if (!params.id) {
+                this.setState({ reviews: response.data.data });
+            }
+            return response.data;
+        } catch (e) {
+            console.log(e);
+            return null;
+        }
+    }
+
+    setReviewState = async () => {
+        // check if the user has already reviewed the restaurant
+        try {
+            const response = await this.getReviews({ id: this.props.userId });
+            if (response.found) {
+                this.setState({ reviewDone: true });
+            }
+        } catch (e) {
+            console.log(e);
+        }       
+    }
+
+    reviewRestaurant = async () => {
+        const bodyData = {
+            userId: this.props.userId,
+            food: this.state.foodRating,
+            service: this.state.serviceRating,
+            environment: this.state.environmentRating,
+            price: this.state.priceRating,
+            comment: this.state.comment
+        };
+        console.log(bodyData);
+        console.log(api.reviewRestaurant(this.props.match.params.id));
+
+        try {
+            const response = await axios.post(api.reviewRestaurant(this.props.match.params.id), bodyData);
+            console.log(response.data);
+            this.setState({ showModal: false }, () => this.showConfirmation(true, 'Your review has been added'));
+            await this.setReviewState();
+            await this.fetchDetails();
+            await this.getReviews({});
+        } catch (e) {
+            console.log(e);
+            this.setState({ showModal: false }, () => this.showConfirmation(false, ''));
+        }
+    }
+
     renderRatingBox() {
         const { data } = this.state;
         return (
             <RatingModal
                 data={data}
-                onSubmit={this.handleReviewButton}
+                onSubmit={this.reviewRestaurant}
                 onExit={this.handleReviewButton}
                 onChangeRating={this.onChangeRating}
                 foodRating={this.state.foodRating}
                 environmentRating={this.state.environmentRating}
                 serviceRating={this.state.serviceRating}
                 priceRating={this.state.priceRating}
+                comment={this.state.comment}
+                onChangeComment={this.onChangeComment}
             />
         );
     }
@@ -116,7 +199,7 @@ class Details extends Component {
     };
 
     renderReviewButton() {
-        if (this.props.isLoggedIn) {
+        if (this.props.isLoggedIn && !this.state.reviewDone) {
             return (
                 <div
                     className={styles.button}
@@ -133,6 +216,12 @@ class Details extends Component {
             );
         }
         return null;
+    }
+
+    renderReviews() {
+        return this.state.reviews.map((item) => 
+            <ReviewBox key={item._id} styles={styles} item={item} />
+        )
     }
 
     render() {
@@ -527,7 +616,7 @@ class Details extends Component {
                                 className={styles.reviewBlock}
                                 ref={comp => (this.reviewSection = comp)}
                             >
-                                <ReviewBox styles={styles} />
+                                {this.renderReviews()}
                             </div>
                         </div>
                     </div>
@@ -549,7 +638,8 @@ const inStyle = {
 
 const mapStateToProps = state => {
     return {
-        isLoggedIn: state.auth.isLoggedIn
+        isLoggedIn: state.auth.isLoggedIn,
+        userId: state.auth.userData._id
     };
 };
 
