@@ -7,6 +7,7 @@ import DetailsPage from './Details';
 import CreateRestaurant from './ResCreate';
 import EditRestaurant from './ResEdit';
 import UserProfile from './UserProfile';
+import BlogList from './BlogList';
 import { history } from '../utils/history';
 import styles from '../views/SearchResult.module.css';
 
@@ -38,6 +39,10 @@ const MainPage = props => {
                     <ProtectedRoute
                         path='/main/profile'
                         component={UserProfile}
+                    />
+                    <Route
+                        path='/main/blog'
+                        component={BlogList}
                     />
                 </div>
             </Router>

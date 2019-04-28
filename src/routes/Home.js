@@ -145,7 +145,7 @@ class Home extends React.Component {
                                 <Link to='/'>Food Photography</Link>
                             </li>
                             <li className={styles.mainNavList}>
-                                <Link to='/'>Blog</Link>
+                                <Link to='/main/blog'>Blog</Link>
                             </li>
                             {/* sign in here */}
                             {this.renderAuthOrWelcome()}

@@ -1,0 +1,155 @@
+.Extralarge{
+    font-size: 90px;
+}
+
+.Large{
+    font-size: 40px;
+}
+
+.Medium{
+    font-size: 25px;
+}
+
+.Small{
+    font-size: 15px;
+}
+
+.orange{
+    color: #ED7D31;
+}
+
+.Ash{
+    color: #c5c5c5;
+    font-family: 'Calibri Light';
+}
+
+
+.Cover{
+    background-image: linear-gradient(rgba(255, 116, 2, 0.5), rgba(255, 115, 0, 0.5)),
+        url('/images/css/FoodBlogCover.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 80vh;
+    display: grid;
+    flex-direction: column;  
+    
+}
+
+.frontText{ 
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+    color: #fff; 
+}
+
+.add{
+    position: relative;
+    top: 100px;
+    left: 1350px;
+    height: 50px;
+    width: 50px;
+    background-color: orange;
+    border: 2px solid #e5e5e5;
+    border-radius: 25px;
+    padding: 14px;
+}
+
+.Middle{
+    display: flex;
+
+    
+}
+
+.middleLeft{
+    flex: 4;
+    
+    
+}
+
+.blog{
+    border: 2px solid #d9d9d9;
+    width: 740px;
+    height: auto;
+    background-color: #f7f7f7;
+    padding: 20px;
+    margin-bottom: 20px;
+    
+}
+
+.blogImg{
+    width: 700px;
+    height: auto;
+}
+
+.Author{
+    display: flex;
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
+    
+}
+
+.authorImg{
+    width: 50px;
+    height: 50px;
+    border: 2px solid #c5c5c5;
+    border-radius: 25px;
+}
+
+.authorInfo{
+    margin: 5px;
+}
+
+.icon{
+    margin: 8px;
+    border: 1px solid #ED7D31;
+    border-radius: 2px;
+    height: 25px;
+    padding: 3px;
+}
+
+.article{
+    margin-top: 20px; 
+}
+
+
+
+.middleRight{
+    flex: 2;
+    margin-left: 30px;
+    margin-top: 30px;
+    
+}
+
+.topBlog{
+    display: flex;
+    padding: 10px;
+    background-color: white;
+    margin-bottom: 5px;
+
+}
+
+.topImg{
+    width: auto;
+    height: 80px;
+    padding: 5px;
+
+}
+
+.topInfo{
+    padding: 5px;
+}
+
+.topAuthorImg{
+    margin-top: -3px;
+    height: 70px;
+    width: 70px;
+    border: 2px solid #d9d9d9;
+    border-radius: 50px;
+}
+
+
+
