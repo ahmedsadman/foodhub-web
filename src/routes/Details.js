@@ -63,7 +63,6 @@ class Details extends Component {
         type = response ? 'success' : 'error';
         title = response ? 'Done' : 'Oops...';
 
-
         return this.swal.fire({
             type,
             title,
@@ -80,9 +79,9 @@ class Details extends Component {
         this.setState({ [name]: rating });
     };
 
-    onChangeComment = (e) => {
+    onChangeComment = e => {
         this.setState({ comment: e.target.value });
-    }
+    };
 
     getRatingComment(rating) {
         if (rating >= 4.8) return 'Top of Class';
@@ -115,10 +114,13 @@ class Details extends Component {
         };
     }
 
-    getReviews = async (params) => {
+    getReviews = async params => {
         try {
             // url for review and getReview restaurant is same, only method is different
-            const response = await axios.get(api.reviewRestaurant(this.props.match.params.id), { params });
+            const response = await axios.get(
+                api.reviewRestaurant(this.props.match.params.id),
+                { params }
+            );
             console.log(response.data);
 
             // if param is not passed, it means we want all reviews, so update the state
@@ -130,7 +132,7 @@ class Details extends Component {
             console.log(e);
             return null;
         }
-    }
+    };
 
     setReviewState = async () => {
         // check if the user has already reviewed the restaurant
@@ -141,8 +143,8 @@ class Details extends Component {
             }
         } catch (e) {
             console.log(e);
-        }       
-    }
+        }
+    };
 
     reviewRestaurant = async () => {
         const bodyData = {
@@ -157,17 +159,24 @@ class Details extends Component {
         console.log(api.reviewRestaurant(this.props.match.params.id));
 
         try {
-            const response = await axios.post(api.reviewRestaurant(this.props.match.params.id), bodyData);
+            const response = await axios.post(
+                api.reviewRestaurant(this.props.match.params.id),
+                bodyData
+            );
             console.log(response.data);
-            this.setState({ showModal: false }, () => this.showConfirmation(true, 'Your review has been added'));
+            this.setState({ showModal: false }, () =>
+                this.showConfirmation(true, 'Your review has been added')
+            );
             await this.setReviewState();
             await this.fetchDetails();
             await this.getReviews({});
         } catch (e) {
             console.log(e);
-            this.setState({ showModal: false }, () => this.showConfirmation(false, ''));
+            this.setState({ showModal: false }, () =>
+                this.showConfirmation(false, '')
+            );
         }
-    }
+    };
 
     renderRatingBox() {
         const { data } = this.state;
@@ -219,9 +228,9 @@ class Details extends Component {
     }
 
     renderReviews() {
-        return this.state.reviews.map((item) => 
+        return this.state.reviews.map(item => (
             <ReviewBox key={item._id} styles={styles} item={item} />
-        )
+        ));
     }
 
     render() {
@@ -607,17 +616,15 @@ class Details extends Component {
                                 showPlayButton={false}
                             />
                         </div>
-                        <div className={styles.box6}>
+                        <div
+                            className={styles.box6}
+                            ref={comp => (this.reviewSection = comp)}
+                        >
                             <div className={`${styles.orange} ${styles.large}`}>
                                 Reviews
                                 <br />
                             </div>
-                            <div
-                                className={styles.reviewBlock}
-                                ref={comp => (this.reviewSection = comp)}
-                            >
-                                {this.renderReviews()}
-                            </div>
+                            {this.renderReviews()}
                         </div>
                     </div>
                 </div>

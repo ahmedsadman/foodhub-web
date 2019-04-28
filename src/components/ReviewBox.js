@@ -3,15 +3,25 @@ import { Link } from 'react-router-dom';
 
 const ReviewBox = props => {
     const { styles, item } = props;
-    const avgRating = (item.food + item.service + item.environment + item.price) / 4;
+    const avgRating =
+        (item.food + item.service + item.environment + item.price) / 4;
 
     return (
-        <div>
+        <div className={styles.reviewBlock}>
             <div className={styles.top}>
                 <div className={styles.intro}>
-                    <i className='fa fa-user-circle' style={{ fontSize: 30, display: 'inline-block', marginRight: 10 }}></i>
+                    <i
+                        className='fa fa-user-circle'
+                        style={{
+                            fontSize: 30,
+                            display: 'inline-block',
+                            marginRight: 10
+                        }}
+                    />
                     <div>
-                        <h3 className={styles.orange}>{item.userId.username}</h3>
+                        <h3 className={styles.orange}>
+                            {item.userId.username}
+                        </h3>
                     </div>
                 </div>
             </div>
