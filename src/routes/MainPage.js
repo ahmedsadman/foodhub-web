@@ -8,6 +8,7 @@ import CreateRestaurant from './ResCreate';
 import EditRestaurant from './ResEdit';
 import UserProfile from './UserProfile';
 import BlogList from './BlogList';
+import Cart from './Cart';
 import { history } from '../utils/history';
 import styles from '../views/SearchResult.module.css';
 
@@ -28,6 +29,10 @@ const MainPage = props => {
                         path='/main/restaurants/details/:id'
                         component={DetailsPage}
                     />
+                    <Route
+                        path='/main/blog'
+                        component={BlogList}
+                    />
                     <ProtectedRoute
                         path='/main/restaurants/create'
                         component={CreateRestaurant}
@@ -40,9 +45,9 @@ const MainPage = props => {
                         path='/main/profile'
                         component={UserProfile}
                     />
-                    <Route
-                        path='/main/blog'
-                        component={BlogList}
+                    <ProtectedRoute
+                        path='/main/cart'
+                        component={Cart}
                     />
                 </div>
             </Router>

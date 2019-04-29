@@ -31,45 +31,59 @@ class Navbar extends Component {
 
     renderWelcomeComp() {
         return (
-            <li className={`${styles.navlist} ${styles.dropDown}`}>
-                <Link
-                    to={this.props.location.pathname}
-                    className={`${styles.navlink} ${styles.navlistlink}`}
-                >
-                    Welcome
-                    <i className='fa fa-caret-down' />{' '}
-                </Link>
-                <ul className={styles.dropDownContent} style={{ padding: 10 }}>
-                    <li style={{ width: '100%' }}>
-                        <Link
-                            className={`${styles.navlink} ${
-                                styles.navlistlink
-                            }`}
-                            style={{ width: '100%' }}
-                            to='/main/profile'
-                        >
-                            Your Profile
-                        </Link>
-                    </li>
-                    <li style={{ width: '100%' }}>
-                        <Link
-                            className={`${styles.navlink} ${
-                                styles.navlistlink
-                            }`}
-                            style={{ width: '100%' }}
-                            onClick={this.handleLogout.bind(this)}
-                            to={{
-                                pathname: '/',
-                                state: {
-                                    isLogout: true
-                                }
-                            }}
-                        >
-                            Sign Out
-                        </Link>
-                    </li>
-                </ul>
-            </li>
+            <div>
+                <li className={`${styles.navlist}`}>
+                    <Link
+                        to='/main/cart'
+                        className={`${styles.navlink} ${styles.navlistlink}`}
+                    >
+                        <i className='fa fa-shopping-cart' />{' '}
+                    </Link>
+                </li>
+                <li className={`${styles.navlist} ${styles.dropDown}`}>
+                    <Link
+                        to={this.props.location.pathname}
+                        className={`${styles.navlink} ${styles.navlistlink}`}
+                    >
+                        Welcome
+                        <i className='fa fa-caret-down' />{' '}
+                    </Link>
+                    <ul
+                        className={styles.dropDownContent}
+                        style={{ padding: 10 }}
+                    >
+                        <li style={{ width: '100%' }}>
+                            <Link
+                                className={`${styles.navlink} ${
+                                    styles.navlistlink
+                                }`}
+                                style={{ width: '100%' }}
+                                to='/main/profile'
+                            >
+                                Your Profile
+                            </Link>
+                        </li>
+                        <li style={{ width: '100%' }}>
+                            <Link
+                                className={`${styles.navlink} ${
+                                    styles.navlistlink
+                                }`}
+                                style={{ width: '100%' }}
+                                onClick={this.handleLogout.bind(this)}
+                                to={{
+                                    pathname: '/',
+                                    state: {
+                                        isLogout: true
+                                    }
+                                }}
+                            >
+                                Sign Out
+                            </Link>
+                        </li>
+                    </ul>
+                </li>
+                
+            </div>
         );
     }
 

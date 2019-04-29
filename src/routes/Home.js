@@ -47,7 +47,7 @@ class Home extends React.Component {
             toast: true,
             showConfirmButton: false,
             timer: 3000,
-            position: 'top',
+            position: 'top'
         });
     }
 
@@ -105,23 +105,32 @@ class Home extends React.Component {
     renderWelcomeComp() {
         // renders post-login comp
         return (
-            <li className={`${styles.mainNavList} ${styles.dropDown}`}>
-                <Link
-                    className={`${styles.navlink} ${styles.navlistlink}`}
-                    to='/'
-                >
-                    Welcome
-                    <i className='fa fa-caret-down' />{' '}
-                </Link>
-                <ul className={styles.dropDownContent}>
-                    <li className={styles.dropBox}>
-                        <Link to='/main/profile'>Your Profile</Link>
-                    </li>
-                    <li className={styles.dropBox}>
-                        <Link to='/' onClick={this.handleLogout.bind(this)}>Sign Out</Link>
-                    </li>
-                </ul>
-            </li>
+            <div style={{ display: 'inline-block' }}>
+                <li className={`${styles.mainNavList} ${styles.dropDown}`}>
+                    <Link
+                        className={`${styles.navlink} ${styles.navlistlink}`}
+                        to='/'
+                    >
+                        Welcome
+                        <i className='fa fa-caret-down' />{' '}
+                    </Link>
+                    <ul className={styles.dropDownContent}>
+                        <li className={styles.dropBox}>
+                            <Link to='/main/profile'>Your Profile</Link>
+                        </li>
+                        <li className={styles.dropBox}>
+                            <Link to='/' onClick={this.handleLogout.bind(this)}>
+                                Sign Out
+                            </Link>
+                        </li>
+                    </ul>
+                </li>
+                <li className={`${styles.mainNavList}`}>
+                    <Link to='/main/cart'>
+                        <i className='fa fa-shopping-cart' />{' '}
+                    </Link>
+                </li>
+            </div>
         );
     }
 
@@ -212,4 +221,7 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps, { logoutUser })(Home);
+export default connect(
+    mapStateToProps,
+    { logoutUser }
+)(Home);
