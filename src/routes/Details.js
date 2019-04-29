@@ -12,6 +12,8 @@ import styles from '../views/Details.module.css';
 import 'react-image-gallery/styles/css/image-gallery.css';
 import Modal from '../components/common/Modal';
 import RatingModal from '../components/RatingModal';
+import OrderModal from '../components/OrderModal';
+import { addProduct, removeProduct, modifyQuantity } from '../actions';
 
 class Details extends Component {
     constructor(props) {
@@ -37,11 +39,13 @@ class Details extends Component {
                 review: {},
                 social: {},
                 address: {},
-                features: {}
+                features: {},
+                menu: []
             },
             reviews: [],
             loading: false,
-            showModal: false,
+            showRatingModal: false,
+            showOrderModal: false,
             foodRating: 0,
             environmentRating: 0,
             serviceRating: 0,
@@ -57,9 +61,9 @@ class Details extends Component {
         this.setReviewState();
     }
 
-    showConfirmation(response, message) {
+    showConfirmation(response, message, errMessage = null, toast = false) {
         let text, type, title;
-        text = response ? message : 'An unexpected error occured';
+        text = response ? message : (errMessage || 'An unexpected error occured');
         type = response ? 'success' : 'error';
         title = response ? 'Done' : 'Oops...';
 
@@ -67,13 +71,21 @@ class Details extends Component {
             type,
             title,
             text,
-            allowOutsideClick: false
+            allowOutsideClick: false,
+            toast,
+            position: toast ? 'top' : 'center',
+            showConfirmButton: toast ? false : true,
+            timer: toast ? 3000 : null
         });
     }
 
     handleReviewButton = () => {
-        this.setState({ showModal: !this.state.showModal });
+        this.setState({ showRatingModal: !this.state.showRatingModal });
     };
+
+    handleOrderButton = () => {
+        this.setState( { showOrderModal: !this.state.showOrderModal });
+    }
 
     onChangeRating = (rating, name) => {
         this.setState({ [name]: rating });
@@ -164,7 +176,7 @@ class Details extends Component {
                 bodyData
             );
             console.log(response.data);
-            this.setState({ showModal: false }, () =>
+            this.setState({ showRatingModal: false }, () =>
                 this.showConfirmation(true, 'Your review has been added')
             );
             await this.setReviewState();
@@ -172,7 +184,7 @@ class Details extends Component {
             await this.getReviews({});
         } catch (e) {
             console.log(e);
-            this.setState({ showModal: false }, () =>
+            this.setState({ showRatingModal: false }, () =>
                 this.showConfirmation(false, '')
             );
         }
@@ -195,6 +207,10 @@ class Details extends Component {
             />
         );
     }
+    
+    renderOrderBox() {
+        return <OrderModal addItem={this.addItemToCart} removeItem={this.removeItemFromCart} onExit={this.handleOrderButton} menu={this.state.data.menu} />
+    }
 
     handleScrollTo = elRef => {
         // Incase the ref supplied isn't ref.current
@@ -206,6 +222,45 @@ class Details extends Component {
             block: 'start'
         });
     };
+
+    addItemToCart = (item) => {
+        this.setState({
+            data: {
+                ...this.state.data,
+                menu: this.state.data.menu.map((i) => {
+                    if (i._id === item._id) {
+                        i.added = true;
+                    }
+                    return i;
+                })
+            }
+        });
+
+        const duplicate = this.props.cart.items.find(i => i._id === item._id);
+        if (duplicate) {
+            console.log('Product already exists in cart');
+            this.showConfirmation(false, null, 'Item already exists in cart', true);
+            return;
+        }
+        this.props.addProduct(item);
+        this.showConfirmation(true, 'Item added to cart', null, true);
+    }
+
+    removeItemFromCart = (item) => {
+        this.props.removeProduct(item);
+        this.setState({
+            data: {
+                ...this.state.data,
+                menu: this.state.data.menu.map((i) => {
+                    if (i._id === item._id) {
+                        i.added = false;
+                    }
+                    return i;
+                })
+            }
+        });
+        this.showConfirmation(true, 'Item removed', null, true);
+    }
 
     renderReviewButton() {
         if (this.props.isLoggedIn && !this.state.reviewDone) {
@@ -238,10 +293,15 @@ class Details extends Component {
         return (
             <div className={styles.all}>
                 {/* ------------ Rating Modal Start --------------- */}
-                <Modal show={this.state.showModal}>
+                <Modal show={this.state.showRatingModal}>
                     {this.renderRatingBox()}
                 </Modal>
                 {/* ------------ Rating Modal End --------------- */}
+                {/* ------------ Order Modal Start --------------- */}
+                <Modal show={this.state.showOrderModal}>
+                    {this.renderOrderBox()}
+                </Modal>
+                {/* ------------ Order Modal End --------------- */}
                 <div id='main' style={inStyle.container}>
                     <div className={styles.box}>
                         <div className={styles.pic}>
@@ -271,7 +331,8 @@ class Details extends Component {
                                         className={`${styles.navlink} ${
                                             styles.navlistlink
                                         }`}
-                                        to='/'
+                                        to={this.props.location.pathname}
+                                        onClick={this.handleOrderButton}
                                     >
                                         Order Online
                                     </Link>
@@ -373,8 +434,10 @@ class Details extends Component {
                                             margin: '0 10px'
                                         }}
                                     >
-                                        {data.review.average &&
-                                            data.review.average.toFixed(1)}
+                                        {`${data.review.average &&
+                                            data.review.average.toFixed(1)} (${
+                                            data.review.count
+                                        })`}
                                     </div>
                                 </div>
                                 <div className={styles.rating}>
@@ -646,11 +709,12 @@ const inStyle = {
 const mapStateToProps = state => {
     return {
         isLoggedIn: state.auth.isLoggedIn,
-        userId: state.auth.userData._id
+        userId: state.auth.userData._id,
+        cart: state.cart
     };
 };
 
 export default connect(
     mapStateToProps,
-    {}
+    { addProduct, removeProduct, modifyQuantity }
 )(Details);

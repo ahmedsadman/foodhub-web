@@ -32,7 +32,7 @@ export const RestaurantCard = props => {
                             textAlign: 'right'
                         }}
                     >
-                        778 Reviews
+                        {`${props.count} Reviews`}
                     </span>
                 </div>
                 <div style={styles.icons}>

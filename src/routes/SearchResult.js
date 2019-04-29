@@ -57,6 +57,7 @@ class SearchResult extends Component {
                 name={item.name}
                 address={`${item.address.area}, ${item.address.district}`}
                 rating={item.review.average}
+                count={item.review.count}
                 banner_image={item.banner_image}
                 onClick={() => this.handleCardClick(item)}
             />
