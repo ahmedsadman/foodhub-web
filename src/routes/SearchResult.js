@@ -17,13 +17,22 @@ class SearchResult extends Component {
     }
 
     componentDidMount() {
-        this.fetchRestaurants();
+        const { food, area } = this.props.location.state;
+        this.fetchRestaurants(food, area);
     }
 
-    async fetchRestaurants() {
+    componentDidUpdate(prevProps, prevState) {
+        const prevFood = prevProps.location.state.food;
+        const prevArea = prevProps.location.state.area;
+        const { food, area } = this.props.location.state;
+
+        if (prevFood !== food || prevArea !== area) {
+            this.fetchRestaurants(food, area);
+        }
+    }
+
+    async fetchRestaurants(food, area) {
         this.setState({ listLoading: true });
-        const { area, food } = this.props.location.state;
-        console.log(area, food);
         const params = {
             food,
             area

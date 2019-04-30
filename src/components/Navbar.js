@@ -2,11 +2,36 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { logoutUser } from '../actions';
+import { history } from '../utils/history';
 import styles from '../views/components/Navbar.module.css';
 
 class Navbar extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            food: '',
+            area: ''
+        };
+    }
+
     handleLogout() {
         this.props.logoutUser();
+    }
+
+    handleInputChange(e, type) {
+        this.setState({
+            [type]: e.target.value
+        });
+    }
+
+    handleSearchButton() {
+        this.props.history.push({
+            pathname: '/main/restaurants/search',
+            state: {
+                area: this.state.area.toLowerCase(),
+                food: this.state.food.toLowerCase()
+            }
+        });
     }
 
     renderAuthComp() {
@@ -100,13 +125,13 @@ class Navbar extends Component {
                 <div style={{ clear: 'both' }} />
                 <ul className={styles.nav}>
                     <li>
-                        <Link
+                        <div
                             className={`${styles.btn} ${styles.navlist}`}
-                            to='/'
+                            onClick={this.handleSearchButton.bind(this)}
                         >
                             {' '}
                             <i className='fa fa-search' />{' '}
-                        </Link>
+                        </div>
                     </li>
                     <li className={`${styles.navlist} ${styles.navInput}`}>
                         <input
@@ -114,6 +139,8 @@ class Navbar extends Component {
                             name='location'
                             className={styles.smallSearch}
                             placeholder='location'
+                            value={this.state.area}
+                            onChange={(e) => this.handleInputChange(e, 'area')}
                         />
                     </li>
                     <li className={`${styles.navlist} ${styles.navInput}`}>
@@ -122,6 +149,8 @@ class Navbar extends Component {
                             name='search by food'
                             className={styles.bigSearch}
                             placeholder='search by food'
+                            value={this.state.food}
+                            onChange={(e) => this.handleInputChange(e, 'food')}
                         />
                     </li>
 
