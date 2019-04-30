@@ -12,7 +12,8 @@ class SearchResult extends Component {
         super(props);
         this.state = {
             list: [],
-            listLoading: false
+            listLoading: false,
+            sortOption: 'popularity'
         };
     }
 
@@ -35,7 +36,8 @@ class SearchResult extends Component {
         this.setState({ listLoading: true });
         const params = {
             food,
-            area
+            area,
+            sort: this.state.sortOption
         };
 
         try {
@@ -47,9 +49,20 @@ class SearchResult extends Component {
         }
     }
 
-    handleCardClick = (item) => {
+    handleCardClick = item => {
         console.log('handle click ran');
         history.push(`/main/restaurants/details/${item._id}`);
+    };
+
+    handleRadioChange = e => {
+        this.setState({
+            sortOption: e.target.value
+        });
+    };
+
+    handleFilterClick = () => {
+        const { food, area } = this.props.location.state;
+        this.fetchRestaurants(food, area);
     }
 
     renderRestaurantsList() {
@@ -58,7 +71,9 @@ class SearchResult extends Component {
         }
 
         if (!this.state.listLoading && this.state.list.length === 0) {
-            return <h1 style={{ textAlign: 'center' }}>No Restaurants Found</h1>;
+            return (
+                <h1 style={{ textAlign: 'center' }}>No Restaurants Found</h1>
+            );
         }
         return this.state.list.map(item => (
             <RestaurantCard
@@ -80,55 +95,47 @@ class SearchResult extends Component {
                     <section style={{ float: 'left', width: '25%' }}>
                         <div className={styles.filterBlock}>
                             <span className={styles.orange}>
-                                Tags <br />
-                                <br />
-                            </span>
-                            <span className={styles.Tags}>
-                                Burgers
-                                <span>
-                                    <Link className={styles.cross} to='/'>
-                                        {' '}
-                                        x
-                                    </Link>
-                                </span>
-                            </span>
-                            <span className={styles.Tags}>
-                                Uttara
-                                <span>
-                                    <Link className={styles.cross} to='/'>
-                                        {' '}
-                                        x
-                                    </Link>
-                                </span>
-                            </span>
-
-                            <br />
-
-                            <span className={styles.orange}>
                                 <br />
                                 <br /> Sort by <br /> <br />
                             </span>
                             <span>
-                                <Link className={styles.Ash} to='/'>
-                                    Popularity
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    rating
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Price
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Distance
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Recently Added
-                                </Link>{' '}
-                                <br />
+                                <div className={styles.Ash} to='/'>
+                                    <input
+                                        type='radio'
+                                        value='popularity'
+                                        name='sort'
+                                        checked={
+                                            this.state.sortOption ===
+                                            'popularity'
+                                        }
+                                        onChange={this.handleRadioChange}
+                                    />
+                                    <span>Popularity</span>
+                                </div>
+                                <div className={styles.Ash} to='/'>
+                                    <input
+                                        type='radio'
+                                        value='rating'
+                                        name='sort'
+                                        checked={
+                                            this.state.sortOption === 'rating'
+                                        }
+                                        onChange={this.handleRadioChange}
+                                    />
+                                    <span>Rating</span>
+                                </div>
+                                <div className={styles.Ash} to='/'>
+                                    <input
+                                        type='radio'
+                                        value='recent'
+                                        name='sort'
+                                        checked={
+                                            this.state.sortOption === 'recent'
+                                        }
+                                        onChange={this.handleRadioChange}
+                                    />
+                                    <span>Recently Added</span>
+                                </div>
                             </span>
 
                             <span className={styles.orange}>
@@ -157,37 +164,22 @@ class SearchResult extends Component {
                                 </Link>{' '}
                                 <br />
                             </span>
-
-                            <span className={styles.orange}>
-                                <br />
-                                <br /> Location <br /> <br />
-                            </span>
-                            <span className={styles.Ash}>
-                                <Link className={styles.Ash} to='/'>
-                                    Uttara
-                                </Link>
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Banani
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Dhanmondi
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Mohammadpur
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Mirpur
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Khilgaon
-                                </Link>{' '}
-                                <br />
-                            </span>
+                            <div style={{ textAlign: 'center', width: '100%' }}>
+                                <button
+                                    style={{
+                                        margin: '10px 0',
+                                        padding: 10,
+                                        outline: 0,
+                                        border: 0,
+                                        backgroundColor: 'orange',
+                                        color: 'white',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={this.handleFilterClick}
+                                >
+                                    Filter
+                                </button>
+                            </div>
                         </div>
                     </section>
                     {/*Restaurant Block */}
