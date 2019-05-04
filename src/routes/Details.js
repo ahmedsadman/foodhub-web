@@ -63,7 +63,7 @@ class Details extends Component {
 
     showConfirmation(response, message, errMessage = null, toast = false) {
         let text, type, title;
-        text = response ? message : (errMessage || 'An unexpected error occured');
+        text = response ? message : errMessage || 'An unexpected error occured';
         type = response ? 'success' : 'error';
         title = response ? 'Done' : 'Oops...';
 
@@ -84,8 +84,8 @@ class Details extends Component {
     };
 
     handleOrderButton = () => {
-        this.setState( { showOrderModal: !this.state.showOrderModal });
-    }
+        this.setState({ showOrderModal: !this.state.showOrderModal });
+    };
 
     onChangeRating = (rating, name) => {
         this.setState({ [name]: rating });
@@ -190,6 +190,23 @@ class Details extends Component {
         }
     };
 
+    renderOrderButton() {
+        if (this.props.isLoggedIn) {
+            return (
+                <li className={styles.navlist}>
+                    <Link
+                        className={`${styles.navlink} ${styles.navlistlink}`}
+                        to={this.props.location.pathname}
+                        onClick={this.handleOrderButton}
+                    >
+                        Order Online
+                    </Link>
+                </li>
+            );
+        }
+        return null;
+    }
+
     renderRatingBox() {
         const { data } = this.state;
         return (
@@ -207,9 +224,17 @@ class Details extends Component {
             />
         );
     }
-    
+
     renderOrderBox() {
-        return <OrderModal addItem={this.addItemToCart} removeItem={this.removeItemFromCart} onExit={this.handleOrderButton} menu={this.state.data.menu} />
+        return (
+            <OrderModal
+                addItem={this.addItemToCart}
+                removeItem={this.removeItemFromCart}
+                onExit={this.handleOrderButton}
+                menu={this.state.data.menu}
+                onButtonClick={() => this.props.history.push('/main/cart')}
+            />
+        );
     }
 
     handleScrollTo = elRef => {
@@ -223,11 +248,11 @@ class Details extends Component {
         });
     };
 
-    addItemToCart = (item) => {
+    addItemToCart = item => {
         this.setState({
             data: {
                 ...this.state.data,
-                menu: this.state.data.menu.map((i) => {
+                menu: this.state.data.menu.map(i => {
                     if (i._id === item._id) {
                         i.added = true;
                     }
@@ -239,19 +264,24 @@ class Details extends Component {
         const duplicate = this.props.cart.items.find(i => i._id === item._id);
         if (duplicate) {
             console.log('Product already exists in cart');
-            this.showConfirmation(false, null, 'Item already exists in cart', true);
+            this.showConfirmation(
+                false,
+                null,
+                'Item already exists in cart',
+                true
+            );
             return;
         }
         this.props.addProduct(item);
         this.showConfirmation(true, 'Item added to cart', null, true);
-    }
+    };
 
-    removeItemFromCart = (item) => {
+    removeItemFromCart = item => {
         this.props.removeProduct(item);
         this.setState({
             data: {
                 ...this.state.data,
-                menu: this.state.data.menu.map((i) => {
+                menu: this.state.data.menu.map(i => {
                     if (i._id === item._id) {
                         i.added = false;
                     }
@@ -260,7 +290,7 @@ class Details extends Component {
             }
         });
         this.showConfirmation(true, 'Item removed', null, true);
-    }
+    };
 
     renderReviewButton() {
         if (this.props.isLoggedIn && !this.state.reviewDone) {
@@ -326,17 +356,7 @@ class Details extends Component {
                                         Overview
                                     </Link>
                                 </li>
-                                <li className={styles.navlist}>
-                                    <Link
-                                        className={`${styles.navlink} ${
-                                            styles.navlistlink
-                                        }`}
-                                        to={this.props.location.pathname}
-                                        onClick={this.handleOrderButton}
-                                    >
-                                        Order Online
-                                    </Link>
-                                </li>
+                                {this.renderOrderButton()}
                                 <li className={styles.navlist}>
                                     <Link
                                         className={`${styles.navlink} ${
