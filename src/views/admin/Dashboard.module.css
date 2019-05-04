@@ -11,8 +11,7 @@
 }
 
 .cardContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 15px;
+    display: flex;
+    flex-direction: column;
     margin: 20px auto;
 }

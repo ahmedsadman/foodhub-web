@@ -83,6 +83,28 @@ class UserProfile extends Component {
         history.push('/main/restaurants/create');
     }
 
+    renderRestaurantManager() {
+        if (this.props.privileged) {
+            return (
+                <div>
+                    <h2 style={{ textAlign: 'center', marginBottom: 20 }}>
+                        My restaurants{' '}
+                        <i
+                            style={{
+                                marginLeft: 10,
+                                color: 'gray',
+                                cursor: 'pointer'
+                            }}
+                            onClick={this.handleCreateRes.bind(this)}
+                            className='fa fa-plus'
+                        />
+                    </h2>
+                    {this.renderList()}
+                </div>
+            );
+        }
+        return <p>You currently don't have any permission to add restaurants. Please contact the admin</p>
+    }
     renderList() {
         if (!this.state.list.length) return <p>No restaurants found. Start by adding one</p>;
         return this.state.list.map(item => {
@@ -193,19 +215,7 @@ class UserProfile extends Component {
                 </div>
                 {/* --------------------- Profile information END ------------------ */}
                 <div style={{ ...inStyles.section, flexDirection: 'column' }}>
-                    <h2 style={{ textAlign: 'center', marginBottom: 20 }}>
-                        My restaurants{' '}
-                        <i
-                            style={{
-                                marginLeft: 10,
-                                color: 'gray',
-                                cursor: 'pointer'
-                            }}
-                            onClick={this.handleCreateRes.bind(this)}
-                            className='fa fa-plus'
-                        />
-                    </h2>
-                    {this.renderList()}
+                    {this.renderRestaurantManager()}
                 </div>
             </div>
         );
@@ -265,7 +275,8 @@ const styles = {
 
 const mapStateToProps = state => {
     return {
-        auth: state.auth
+        auth: state.auth,
+        privileged: state.auth.userData.privileged
     };
 };
 
