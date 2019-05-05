@@ -13,7 +13,7 @@ import 'react-image-gallery/styles/css/image-gallery.css';
 import Modal from '../components/common/Modal';
 import RatingModal from '../components/RatingModal';
 import OrderModal from '../components/OrderModal';
-import { addProduct, removeProduct, modifyQuantity } from '../actions';
+import { addProduct, removeProduct, modifyQuantity, setCart } from '../actions';
 
 class Details extends Component {
     constructor(props) {
@@ -86,6 +86,21 @@ class Details extends Component {
     handleOrderButton = () => {
         this.setState({ showOrderModal: !this.state.showOrderModal });
     };
+
+    handleOrderExit = async () => {
+        // show confirmation that cart will be reset on exit
+        const res = await this.swal.fire({
+            text: 'Items on the cart will be reset. Are you sure you want to exit?',
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Remove',
+            confirmButtonColor: '#d33'
+        });
+        if (res.value) {
+            await this.props.setCart([]);
+            this.handleOrderButton();
+        }
+    }
 
     onChangeRating = (rating, name) => {
         this.setState({ [name]: rating });
@@ -230,7 +245,7 @@ class Details extends Component {
             <OrderModal
                 addItem={this.addItemToCart}
                 removeItem={this.removeItemFromCart}
-                onExit={this.handleOrderButton}
+                onExit={this.handleOrderExit}
                 menu={this.state.data.menu}
                 onButtonClick={() => this.props.history.push('/main/cart')}
             />
@@ -736,5 +751,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { addProduct, removeProduct, modifyQuantity }
+    { addProduct, removeProduct, modifyQuantity, setCart }
 )(Details);

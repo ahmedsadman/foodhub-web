@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Prompt } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
 import CartItem from '../components/CartItem';
-import { removeProduct, modifyQuantity } from '../actions';
+import { removeProduct, modifyQuantity, setCart } from '../actions';
 
 class Cart extends Component {
     constructor(props) {
@@ -11,12 +12,21 @@ class Cart extends Component {
         this.swal = withReactContent(Swal);
     }
 
+    componentDidMount() {
+        window.scrollTo(0, 0);
+    }
+
+    componentWillUnmount() {
+        this.props.setCart([]);
+    }
+
     removeProduct = async item => {
         const res = await this.swal.fire({
             text: 'Are you sure you want to remove the product?',
             type: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Remove',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
             confirmButtonColor: '#d33'
         });
         if (res.value) {
@@ -74,11 +84,7 @@ class Cart extends Component {
                     <span>Subtotal</span>
                     <span>{`${this.calculateTotal()} Tk`}</span>
                 </div>
-                <button
-                    style={styles.button}
-                >
-                    Place Order
-                </button>
+                <button style={styles.button}>Place Order</button>
             </div>
         );
     }
@@ -86,6 +92,10 @@ class Cart extends Component {
     render() {
         return (
             <div style={styles.container}>
+                <Prompt
+                    when={this.props.items.length > 0}
+                    message='Items in cart will be reset'
+                />
                 <h1 style={{ marginBottom: 20 }}>My Cart</h1>
                 <div
                     style={{
@@ -135,5 +145,5 @@ const mapStateToProps = state => {
 
 export default connect(
     mapStateToProps,
-    { removeProduct, modifyQuantity }
+    { removeProduct, modifyQuantity, setCart }
 )(Cart);
