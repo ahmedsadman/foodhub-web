@@ -93,7 +93,8 @@ class Details extends Component {
             text: 'Items on the cart will be reset. Are you sure you want to exit?',
             type: 'warning',
             showCancelButton: true,
-            confirmButtonText: 'Remove',
+            confirmButtonText: 'Yes',
+            cancelButtonText: 'No',
             confirmButtonColor: '#d33'
         });
         if (res.value) {
@@ -247,7 +248,12 @@ class Details extends Component {
                 removeItem={this.removeItemFromCart}
                 onExit={this.handleOrderExit}
                 menu={this.state.data.menu}
-                onButtonClick={() => this.props.history.push('/main/cart')}
+                onButtonClick={() => this.props.history.push({
+                    pathname: '/main/cart',
+                    state: {
+                        restaurant: this.state.data
+                    }
+                })}
             />
         );
     }
