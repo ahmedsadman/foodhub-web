@@ -112,6 +112,9 @@ class UserProfile extends Component {
             return (
                 <tr key={item._id} style={{ borderBottom: '1px solid #ddd' }}>
                     <td style={{ padding: '10px 5px' }}>
+                        {item.restaurant.name}
+                    </td>
+                    <td style={{ padding: '10px 5px' }}>
                         {item._id.substring(item._id.length - 4)}
                     </td>
                     <td style={{ padding: '10px 5px' }}>
@@ -128,7 +131,9 @@ class UserProfile extends Component {
                         })}
                     </td>
                     <td style={{ padding: '10px 5px' }}>{item.total_amount}</td>
-                    <td style={{ padding: '10px 5px' }}>{item.delivery_address}</td>
+                    <td style={{ padding: '10px 5px' }}>
+                        {item.delivery_address}
+                    </td>
                     <td style={{ padding: '10px 5px' }}>
                         {date.toDateString()}
                     </td>
@@ -170,9 +175,17 @@ class UserProfile extends Component {
                                 <tr
                                     style={{
                                         borderBottom: '1px solid #ddd',
-                                        fontSize: '120%'
+                                        fontSize: '110%'
                                     }}
                                 >
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Restaurant
+                                    </td>
                                     <td
                                         style={{
                                             padding: '10px 5px',
