@@ -144,6 +144,7 @@ class Auth extends Component {
         }
         return null;
     }
+    
     renderLoginOrLoader() {
         if (this.props.auth.loading) {
             return (

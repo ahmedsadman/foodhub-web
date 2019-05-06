@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 import axios from 'axios';
 import Modal from '../components/common/Modal';
 import CreatePostModal from '../components/CreatePostModal';
@@ -29,8 +30,11 @@ class BlogList extends Component {
     };
 
     handlePostClick = (item = {}) => {
-        this.setState({ showDetailModal: !this.state.showDetailModal, post: item });
-    }
+        this.setState({
+            showDetailModal: !this.state.showDetailModal,
+            post: item
+        });
+    };
 
     async fetchBlogList() {
         try {
@@ -46,19 +50,51 @@ class BlogList extends Component {
         if (this.state.blogList.length === 0) {
             return <p>No posts found</p>;
         }
-        return this.state.blogList.map((item) => {
-            return <BlogItem key={item._id} styles={styles} item={item} onClick={() => this.handlePostClick(item)} />;
+        return this.state.blogList.map(item => {
+            return (
+                <BlogItem
+                    key={item._id}
+                    styles={styles}
+                    item={item}
+                    onClick={() => this.handlePostClick(item)}
+                />
+            );
         });
+    }
+
+    renderAddButton() {
+        if (this.props.isLoggedIn) {
+            return (
+                <div className={styles.add}>
+                    <div
+                        style={{ cursor: 'pointer' }}
+                        onClick={this.handleAddButton}
+                    >
+                        <i className='fa fa-pencil fa-lg' />
+                    </div>
+                </div>
+            );
+        }
+        return null;
     }
 
     render() {
         return (
             <div className={styles.all}>
                 <Modal show={this.state.showCreateModal}>
-                    <CreatePostModal onExit={this.handleAddButton} updateList={this.fetchBlogList.bind(this)} />
+                    <CreatePostModal
+                        onExit={this.handleAddButton}
+                        updateList={this.fetchBlogList.bind(this)}
+                    />
                 </Modal>
-                <Modal show={this.state.showDetailModal} style={{ height: 600, overflowY: 'scroll', width: '50%' }}>
-                    <PostDetailModal onExit={this.handlePostClick} item={this.state.post} />
+                <Modal
+                    show={this.state.showDetailModal}
+                    style={{ height: 600, overflowY: 'scroll', width: '50%' }}
+                >
+                    <PostDetailModal
+                        onExit={this.handlePostClick}
+                        item={this.state.post}
+                    />
                 </Modal>
                 <div className={styles.Cover}>
                     <div className={styles.frontText}>
@@ -70,14 +106,7 @@ class BlogList extends Component {
                             Know Food | Write Food | Read Food
                         </div>
                     </div>
-                    <div className={styles.add}>
-                        <div
-                            style={{ cursor: 'pointer' }}
-                            onClick={this.handleAddButton}
-                        >
-                            <i className='fa fa-pencil fa-lg' />
-                        </div>
-                    </div>
+                    {this.renderAddButton()}
                 </div>
 
                 <div id='main' style={inStyle.container}>
@@ -253,4 +282,10 @@ const inStyle = {
     }
 };
 
-export default BlogList;
+const mapStateToProps = state => {
+    return {
+        isLoggedIn: state.auth.isLoggedIn
+    };
+};
+
+export default connect(mapStateToProps, {})(BlogList);
