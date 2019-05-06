@@ -11,7 +11,8 @@ class UserProfile extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: [],
+            restaurantList: [],
+            orderList: [],
             empty: ''
         };
         this.swal = withReactContent(Swal);
@@ -43,7 +44,12 @@ class UserProfile extends Component {
         try {
             const response = await axios.get(api.userRestaurant, { params });
             console.log(response.data);
-            this.setState({ list: response.data.data });
+            this.setState({ restaurantList: response.data.data }, () => {
+                // fetch orders of the restaurants
+                for (let res of this.state.restaurantList) {
+                    this.fetchOrders(res._id);
+                }
+            });
         } catch (e) {
             console.log(e);
         }
@@ -75,7 +81,7 @@ class UserProfile extends Component {
             pathname: '/main/restaurants/edit',
             state: {
                 item
-            } 
+            }
         });
     }
 
@@ -83,31 +89,157 @@ class UserProfile extends Component {
         history.push('/main/restaurants/create');
     }
 
+    async fetchOrders(id) {
+        const params = {
+            restaurantId: id
+        };
+        try {
+            const response = await axios.get(api.orderHistory, { params });
+            this.setState({
+                orderList: [...this.state.orderList, ...response.data.data]
+            });
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    renderOrderList() {
+        if (this.state.orderList.length === 0) {
+            return <p>No orders available</p>;
+        }
+        return this.state.orderList.map(item => {
+            const date = new Date(item.createdAt);
+            return (
+                <tr key={item._id} style={{ borderBottom: '1px solid #ddd' }}>
+                    <td style={{ padding: '10px 5px' }}>
+                        {item._id.substring(item._id.length - 4)}
+                    </td>
+                    <td style={{ padding: '10px 5px' }}>
+                        {item.user.username}
+                    </td>
+                    <td style={{ padding: '10px 5px' }}>
+                        {item.items.map(mapItem => {
+                            return (
+                                <React.Fragment key={mapItem._id}>
+                                    {`${mapItem.name}(${mapItem.quantity})`}
+                                    <br />
+                                </React.Fragment>
+                            );
+                        })}
+                    </td>
+                    <td style={{ padding: '10px 5px' }}>{item.total_amount}</td>
+                    <td style={{ padding: '10px 5px' }}>{item.delivery_address}</td>
+                    <td style={{ padding: '10px 5px' }}>
+                        {date.toDateString()}
+                    </td>
+                </tr>
+            );
+        });
+    }
+
     renderRestaurantManager() {
         if (this.props.privileged) {
             return (
-                <div>
-                    <h2 style={{ textAlign: 'center', marginBottom: 20 }}>
-                        My restaurants{' '}
-                        <i
+                <>
+                    <div>
+                        <h2 style={{ textAlign: 'center', marginBottom: 20 }}>
+                            My restaurants{' '}
+                            <i
+                                style={{
+                                    marginLeft: 10,
+                                    color: 'gray',
+                                    cursor: 'pointer'
+                                }}
+                                onClick={this.handleCreateRes.bind(this)}
+                                className='fa fa-plus'
+                            />
+                        </h2>
+                        {this.renderList()}
+                    </div>
+                    <div>
+                        <h2 style={{ textAlign: 'center', margin: '20px 0' }}>
+                            Orders
+                        </h2>
+                        <table
                             style={{
-                                marginLeft: 10,
-                                color: 'gray',
-                                cursor: 'pointer'
+                                borderCollapse: 'collapse',
+                                fontSize: '80%'
                             }}
-                            onClick={this.handleCreateRes.bind(this)}
-                            className='fa fa-plus'
-                        />
-                    </h2>
-                    {this.renderList()}
-                </div>
+                        >
+                            <thead>
+                                <tr
+                                    style={{
+                                        borderBottom: '1px solid #ddd',
+                                        fontSize: '120%'
+                                    }}
+                                >
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Order ID
+                                    </td>
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Customer
+                                    </td>
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Items
+                                    </td>
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Total Amount
+                                    </td>
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Address
+                                    </td>
+                                    <td
+                                        style={{
+                                            padding: '10px 5px',
+                                            color: 'orange'
+                                        }}
+                                    >
+                                        Created At
+                                    </td>
+                                </tr>
+                            </thead>
+                            <tbody>{this.renderOrderList()}</tbody>
+                        </table>
+                    </div>
+                </>
             );
         }
-        return <p>You currently don't have any permission to add restaurants. Please contact the admin</p>
+        return (
+            <p>
+                You currently don't have any permission to add restaurants.
+                Please contact the admin
+            </p>
+        );
     }
     renderList() {
-        if (!this.state.list.length) return <p>No restaurants found. Start by adding one</p>;
-        return this.state.list.map(item => {
+        if (!this.state.restaurantList.length)
+            return <p>No restaurants found. Start by adding one</p>;
+        return this.state.restaurantList.map(item => {
             return (
                 <Card key={item._id} style={{ margin: '5px 0' }}>
                     <div

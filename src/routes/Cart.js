@@ -13,7 +13,8 @@ class Cart extends Component {
         super(props);
         this.swal = withReactContent(Swal);
         this.state = {
-            orderList: []
+            orderList: [],
+            delivery: ''
         };
     }
 
@@ -24,6 +25,12 @@ class Cart extends Component {
 
     componentWillUnmount() {
         this.props.setCart([]);
+    }
+
+    handleInputChange(e, type) {
+        this.setState({
+            [type]: e.target.value
+        });
     }
 
     showConfirmation(response, message, errMessage = null, toast = false) {
@@ -77,12 +84,17 @@ class Cart extends Component {
     };
 
     placeOrder = async () => {
+        if (!this.state.delivery) {
+            this.showConfirmation(false, null, 'Please fill up delivery address', true);
+            return;
+        }
         const restaurant = this.props.location.state.restaurant._id;
         const data = {
             restaurant,
             user: this.props.userId,
             items: this.props.items,
-            total_amount: this.calculateTotal()
+            total_amount: this.calculateTotal(),
+            delivery_address: this.state.delivery
         };
 
         try {
@@ -146,6 +158,16 @@ class Cart extends Component {
                     <span>Subtotal</span>
                     <span>{`${this.calculateTotal()} Tk`}</span>
                 </div>
+                <div style={{ display: 'flex', width: '100%', alignSelf: 'center', flexDirection: 'column' }}>
+                    <span>Delivery Address</span>
+                    <input
+                        type='text'
+                        name='delivery_address'
+                        value={this.state.delivery}
+                        onChange={(e) => this.handleInputChange(e, 'delivery')}
+                        style={{ display: 'flex', flexGrow: 1, marginBottom: 20, padding: 5 }}
+                    />
+                </div>
                 <button style={styles.button} onClick={this.placeOrder}>
                     Place Order
                 </button>
@@ -178,9 +200,7 @@ class Cart extends Component {
                             );
                         })}
                     </td>
-                    <td style={{ padding: '10px 5px' }}>
-                        {item.total_amount}
-                    </td>
+                    <td style={{ padding: '10px 5px' }}>{item.total_amount}</td>
                     <td style={{ padding: '10px 5px' }}>
                         {date.toDateString()}
                     </td>
@@ -205,13 +225,48 @@ class Cart extends Component {
                 </h1>
                 <div style={styles.section}>
                     {/* CART ITEM */}
-                    <table style={{ borderCollapse: 'collapse', fontSize: '80%' }}>
+                    <table
+                        style={{ borderCollapse: 'collapse', fontSize: '80%' }}
+                    >
                         <thead>
-                            <tr style={{ borderBottom: '1px solid #ddd', fontSize: '120%' }}>
-                                <td style={{ padding: '10px 5px', color: 'orange' }}>Restaurant</td>
-                                <td style={{ padding: '10px 5px', color: 'orange' }}>Items</td>
-                                <td style={{ padding: '10px 5px', color: 'orange' }}>Total</td>
-                                <td style={{ padding: '10px 5px', color: 'orange' }}>Created At</td>
+                            <tr
+                                style={{
+                                    borderBottom: '1px solid #ddd',
+                                    fontSize: '120%'
+                                }}
+                            >
+                                <td
+                                    style={{
+                                        padding: '10px 5px',
+                                        color: 'orange'
+                                    }}
+                                >
+                                    Restaurant
+                                </td>
+                                <td
+                                    style={{
+                                        padding: '10px 5px',
+                                        color: 'orange'
+                                    }}
+                                >
+                                    Items
+                                </td>
+                                <td
+                                    style={{
+                                        padding: '10px 5px',
+                                        color: 'orange'
+                                    }}
+                                >
+                                    Total
+                                </td>
+                                <td
+                                    style={{
+                                        padding: '10px 5px',
+                                        color: 'orange'
+                                    }}
+                                >
+                                    Created At
+                                </td>
                             </tr>
                         </thead>
                         <tbody>{this.renderOrderHistory()}</tbody>
