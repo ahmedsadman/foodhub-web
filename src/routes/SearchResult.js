@@ -10,11 +10,23 @@ import styles from '../views/SearchResult.module.css';
 class SearchResult extends Component {
     constructor(props) {
         super(props);
-        this.state = {
+        this.INIT = {
             list: [],
             listLoading: false,
-            sortOption: 'popularity'
+            sortOption: 'popularity',
+            fineDining: false,
+            fastFood: false,
+            foodCart: false,
+            rooftop: false,
+            poolside: false,
+            wifi: false,
+            smoking_zone: false,
+            delivery: false,
+            ac: false,
+            reservation: false,
+            parking: false
         };
+        this.state = this.INIT;
     }
 
     componentDidMount() {
@@ -37,8 +49,23 @@ class SearchResult extends Component {
         const params = {
             food,
             area,
-            sort: this.state.sortOption
+            sort: this.state.sortOption,
+            features: [],
+            type: []
         };
+
+        if (this.state.fineDining) params.type.push('fineDining');
+        if (this.state.poolside) params.type.push('poolside');
+        if (this.state.foodCart) params.type.push('foodCart');
+        if (this.state.rooftop) params.type.push('rooftop');
+        if (this.state.fastFood) params.type.push('fastFood');
+
+        if (this.state.wifi) params.features.push('wifi');
+        if (this.state.ac) params.features.push('ac');
+        if (this.state.parking) params.features.push('parking');
+        if (this.state.reservation) params.features.push('reservation');
+        if (this.state.delivery) params.features.push('delivery');
+        if (this.state.smoking_zone) params.features.push('smoking_zone');
 
         try {
             const response = await axios.get(api.searchRestaurant, { params });
@@ -60,10 +87,23 @@ class SearchResult extends Component {
         });
     };
 
+    handleCheckboxChange = (e, type) => {
+        this.setState({
+            [type]: e.target.checked
+        });
+    };
+
     handleFilterClick = () => {
         const { food, area } = this.props.location.state;
         this.fetchRestaurants(food, area);
-    }
+    };
+
+    handleResetClick = () => {
+        const { food, area } = this.props.location.state;
+        this.setState({ ...this.INIT }, () => {
+            this.fetchRestaurants(food, area);
+        });
+    };
 
     renderRestaurantsList() {
         if (this.state.listLoading) {
@@ -143,26 +183,157 @@ class SearchResult extends Component {
                                 <br /> Restaurant Type <br /> <br />
                             </span>
                             <span className={styles.Ash}>
-                                <Link className={styles.Ash} to='/'>
-                                    Fine Dinning
-                                </Link>{' '}
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.fineDining}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'fineDining'
+                                            )
+                                        }
+                                    />
+                                    <span>Fine Dinning</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.fastFood}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'fastFood'
+                                            )
+                                        }
+                                    />
+                                    <span>Fast Food</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.foodCart}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'foodCart'
+                                            )
+                                        }
+                                    />
+                                    <span>Food Cart</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.rooftop}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'rooftop'
+                                            )
+                                        }
+                                    />
+                                    <span>Rooftop</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.poolside}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'poolside'
+                                            )
+                                        }
+                                    />
+                                    <span>Poolside</span>
+                                </div>
+                            </span>
+                            
+                            {/* ------------------ Features ------------------- */}
+                            <span className={styles.orange}>
                                 <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Fast food
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Food Cart
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Rooptop
-                                </Link>{' '}
-                                <br />
-                                <Link className={styles.Ash} to='/'>
-                                    Poolside
-                                </Link>{' '}
-                                <br />
+                                <br /> Features <br /> <br />
+                            </span>
+                            <span className={styles.Ash}>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.wifi}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'wifi'
+                                            )
+                                        }
+                                    />
+                                    <span>Wifi</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.ac}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'ac'
+                                            )
+                                        }
+                                    />
+                                    <span>Air Conditioned</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.reservation}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'reservation'
+                                            )
+                                        }
+                                    />
+                                    <span>Reservation</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.delivery}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'delivery'
+                                            )
+                                        }
+                                    />
+                                    <span>Delivery</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.smoking_zone}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'smoking_zone'
+                                            )
+                                        }
+                                    />
+                                    <span>Smoking Zone</span>
+                                </div>
+                                <div>
+                                    <input
+                                        type='checkbox'
+                                        checked={this.state.parking}
+                                        onChange={e =>
+                                            this.handleCheckboxChange(
+                                                e,
+                                                'parking'
+                                            )
+                                        }
+                                    />
+                                    <span>Parking</span>
+                                </div>
                             </span>
                             <div style={{ textAlign: 'center', width: '100%' }}>
                                 <button
@@ -178,6 +349,20 @@ class SearchResult extends Component {
                                     onClick={this.handleFilterClick}
                                 >
                                     Filter
+                                </button>
+                                <button
+                                    style={{
+                                        margin: '10px 5px',
+                                        padding: 10,
+                                        outline: 0,
+                                        border: 0,
+                                        backgroundColor: 'orange',
+                                        color: 'white',
+                                        cursor: 'pointer'
+                                    }}
+                                    onClick={this.handleResetClick}
+                                >
+                                    Reset
                                 </button>
                             </div>
                         </div>

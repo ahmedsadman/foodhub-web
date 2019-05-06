@@ -41,7 +41,8 @@ class Details extends Component {
                 address: {},
                 features: {},
                 menu: [],
-                images: []
+                images: [],
+                restaurant_type: []
             },
             sliderImages: [],
             reviews: [],
@@ -631,6 +632,7 @@ class Details extends Component {
                                 </div>
 
                                 <div className={styles.medium}>
+                                    <span style={{ display: 'block', marginBottom: 20, textTransform: 'capitalize' }}>Type: {data.restaurant_type.join(', ')}</span>
                                     <FeatureLabel
                                         label='Air Conditioned'
                                         feature={data.features.ac}
