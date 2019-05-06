@@ -5,7 +5,7 @@ const JSX_MODAL = props => {
     if (!props.show) return null;
     return (
         <div style={styles.modalContainer}>
-            <div style={styles.modalInner}>{props.children}</div>
+            <div style={{ ...styles.modalInner, ...props.style }}>{props.children}</div>
         </div>
     );
 };

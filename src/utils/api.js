@@ -1,6 +1,8 @@
 const baseURL = 'http://localhost:3000';
 
 export const api = {
+    createBlogPost: `${baseURL}/blog/create`,
+    getBlogList: `${baseURL}/blog`,
     searchRestaurant: `${baseURL}/restaurant/search`,
     createRestaurant: `${baseURL}/admin/restaurants/create`,
     deleteRestaurant: `${baseURL}/admin/restaurants/delete`,
