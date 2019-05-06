@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { api } from '../utils/api';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import withReactContent from 'sweetalert2-react-content';
 import { loginUser } from '../actions';
 import { Spinner } from '../components/common/Spinner';
@@ -15,6 +16,12 @@ class Auth extends Component {
             isLogin: true,
             username: '',
             password: '',
+            regEmail: '',
+            confirmPass: '',
+            regError: '',
+            regUser: '',
+            regPass: '',
+            regLoading: false
         };
         this.swal = withReactContent(Swal);
     }
@@ -40,7 +47,7 @@ class Auth extends Component {
             toast: true,
             showConfirmButton: false,
             timer: 3000,
-            position: 'top',
+            position: 'top'
         });
     }
 
@@ -51,6 +58,57 @@ class Auth extends Component {
     async handleLogin() {
         this.props.loginUser(this.state.username, this.state.password);
     }
+
+    validateEmail(email) {
+        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    }
+
+    handleRegister = async () => {
+        this.setState({ regError: '' });
+        if (
+            !this.state.regUser ||
+            !this.state.regEmail ||
+            !this.state.regPass ||
+            !this.state.confirmPass
+        ) {
+            this.setState({ regError: 'Please fill up all the fields' });
+            return;
+        }
+
+        if (!this.validateEmail(this.state.regEmail)) {
+            this.setState({ regError: 'Invalid email' });
+            return;
+        }
+
+        if (this.state.regPass !== this.state.confirmPass) {
+            this.setState({ regError: "Passwords doesn't match" });
+            return;
+        }
+
+        try {
+            this.setState({ regLoading: true });
+            const bodyData = {
+                username: this.state.regUser,
+                email: this.state.regEmail,
+                password: this.state.regPass
+            };
+            const response = await axios.post(api.register, bodyData);
+            console.log(response.data);
+
+            this.setState({ username: this.state.regUser, password: this.state.regPass, regLoading: false }, () => {
+                this.handleLogin();
+            })
+        } catch (e) {
+            console.log(e.response);
+            if (e.response.data.error.code === 11000) {
+                this.setState({ regError: 'This mail is already registered', regLoading: false });
+            } else {
+                this.setState({ regError: e.message, regLoading: false });
+            }
+            
+        }
+    };
 
     getLoginStyle() {
         return {
@@ -76,6 +134,16 @@ class Auth extends Component {
         }
     }
 
+    renderRegError() {
+        if (this.state.regError) {
+            return (
+                <span style={{ color: 'red', textAlign: 'center' }}>
+                    {this.state.regError}
+                </span>
+            );
+        }
+        return null;
+    }
     renderLoginOrLoader() {
         if (this.props.auth.loading) {
             return (
@@ -87,6 +155,21 @@ class Auth extends Component {
         return (
             <div className={styles.btn} onClick={this.handleLogin.bind(this)}>
                 <b>Login</b>
+            </div>
+        );
+    }
+
+    renderSignupOrLoader() {
+        if (this.state.regLoading) {
+            return (
+                <div style={{ position: 'relative', top: '40%', left: '40%' }}>
+                    <Spinner size='small' />
+                </div>
+            );
+        }
+        return (
+            <div className={styles.btn} onClick={this.handleRegister}>
+                <b>Sign up</b>
             </div>
         );
     }
@@ -134,45 +217,45 @@ class Auth extends Component {
                         />
                         {this.renderError()}
                         {this.renderLoginOrLoader()}
-                        
                     </div>
                     <div
                         className={styles.signup}
                         style={this.getSignupStyle()}
                     >
                         <input
-                            type='Name'
+                            type='Username'
                             name='name'
                             className={styles.input}
                             placeholder='Name'
+                            value={this.state.regUser}
+                            onChange={e => this.onChangeInput('regUser', e)}
                         />
                         <input
-                            type='Email'
+                            type='email'
                             name='Email'
                             className={styles.input}
                             placeholder='Email'
+                            value={this.state.regEmail}
+                            onChange={e => this.onChangeInput('regEmail', e)}
                         />
                         <input
                             type='password'
                             name='Password'
                             placeholder='Password'
                             className={styles.input}
+                            value={this.state.regPass}
+                            onChange={e => this.onChangeInput('regPass', e)}
                         />
                         <input
                             type='password'
                             name='confirmpass'
                             placeholder='Re-enter Password'
                             className={styles.input}
+                            value={this.state.confirmPass}
+                            onChange={e => this.onChangeInput('confirmPass', e)}
                         />
-                        <input
-                            type='password'
-                            name='confirmpass'
-                            placeholder='Password'
-                            className={styles.input}
-                        />
-                        <div className={styles.btn}>
-                            <b>Sign up</b>
-                        </div>
+                        {this.renderRegError()}
+                        {this.renderSignupOrLoader()}
                     </div>
                 </div>
             </div>
