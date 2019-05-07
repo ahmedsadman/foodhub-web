@@ -143,74 +143,244 @@ class Home extends React.Component {
 
     render() {
         return (
-            <header className={styles.header} style={{ position: 'relative' }}>
-                <nav>
-                    <div className={styles.row}>
-                        <ul className={styles.mainNav}>
-                            <li className={styles.mainNavList}>
-                                <Link to='/'>About us</Link>
-                            </li>
-                            <li className={styles.mainNavList}>
-                                <Link to='/'>Food Photography</Link>
-                            </li>
-                            <li className={styles.mainNavList}>
-                                <Link to='/main/blog'>Blog</Link>
-                            </li>
-                            {/* sign in here */}
-                            {this.renderAuthOrWelcome()}
-                        </ul>
-                    </div>
-                </nav>
-                <div className={styles.frontText}>
-                    <Link
-                        className={`${styles.btn} ${styles.btnDark}`}
-                        to='/'
-                        onClick={this.onSearch.bind(this)}
-                    >
-                        <i className='fa fa-search' />
-                    </Link>
-                </div>
-
-                <div>
-                    <form>
-                        <div className={styles.bigSearchContainer}>
-                            <input
-                                type='text'
-                                name='search by food'
-                                placeholder='Search by Food'
-                                className={styles.bigSearch}
-                                value={this.state.food}
-                                onChange={e => this.onChangeInput('food', e)}
-                                spellCheck={false}
-                                onFocus={this.onSearchFocus.bind(this)}
-                                ref={comp => (this.foodSearch = comp)}
-                            />
-                            <ul
-                                className={styles.foodSuggestion}
-                                ref={comp => (this.foodSuggestion = comp)}
-                            >
-                                <li onClick={this.onSuggestionClick}>Burger</li>
-                                <li onClick={this.onSuggestionClick}>Pizza</li>
-                                <li onClick={this.onSuggestionClick}>
-                                    Biriyani
+            <div className={styles.all}>
+                <header className={styles.header} style={{ position: 'relative' }}>
+                    <nav>
+                        <div className={styles.row}>
+                        <img  className={styles.logo} src='/images/css/homeLogo.png' />
+                            <ul className={styles.mainNav}>
+                            
+                                <li className={styles.mainNavList}>
+                                    <Link to='/'>About us</Link>
                                 </li>
+                                <li className={styles.mainNavList}>
+                                    <Link to='/'>Food Photography</Link>
+                                </li>
+                                <li className={styles.mainNavList}>
+                                    <Link to='/main/blog'>Blog</Link>
+                                </li>
+                                {/* sign in here */}
+                                {this.renderAuthOrWelcome()}
                             </ul>
                         </div>
+                    </nav>
+                    <div className={styles.frontText}>
+                        <Link
+                            className={`${styles.btn} ${styles.btnDark}`}
+                            to='/'
+                            onClick={this.onSearch.bind(this)}
+                        >
+                            <i className='fa fa-search' />
+                        </Link>
+                    </div>
 
-                        <div className={styles.smallSearchContainer}>
-                            <input
-                                type='text'
-                                className={styles.smallSearch}
-                                name='Location'
-                                placeholder='Location'
-                                value={this.state.area}
-                                onChange={e => this.onChangeInput('area', e)}
-                            />
+                    <div>
+                        <form>
+                            <div className={styles.bigSearchContainer}>
+                                <input
+                                    type='text'
+                                    name='search by food'
+                                    placeholder='Search by Food'
+                                    className={styles.bigSearch}
+                                    value={this.state.food}
+                                    onChange={e => this.onChangeInput('food', e)}
+                                    spellCheck={false}
+                                    onFocus={this.onSearchFocus.bind(this)}
+                                    ref={comp => (this.foodSearch = comp)}
+                                />
+                                <ul
+                                    className={styles.foodSuggestion}
+                                    ref={comp => (this.foodSuggestion = comp)}
+                                >
+                                    <li onClick={this.onSuggestionClick}>Burger</li>
+                                    <li onClick={this.onSuggestionClick}>Pizza</li>
+                                    <li onClick={this.onSuggestionClick}>
+                                        Biriyani
+                                    </li>
+                                </ul>
+                            </div>
+
+                            <div className={styles.smallSearchContainer}>
+                                <input
+                                    type='text'
+                                    className={styles.smallSearch}
+                                    name='Location'
+                                    placeholder='Location'
+                                    value={this.state.area}
+                                    onChange={e => this.onChangeInput('area', e)}
+                                />
+                            </div>
+                        </form>
+                    </div>
+                    {this.redirectSearch()}
+                </header>
+                
+                <div className={styles.middle}>
+                    
+                    <div className={styles.quickSearch}>
+                        <div className={styles.item}>
+                            <img className={styles.itemImg} src='/images/css/Burger.jpg'/>
+                            Burger
                         </div>
-                    </form>
+                        <div className={styles.item}>
+                            <img className={styles.itemImg} src='/images/css/Pizza.jpg'/>
+                            Pizza
+                        </div>
+                        <div className={styles.item}>
+                            <img className={styles.itemImg} src='/images/css/Burger.jpg'/>
+                            Pasta
+                        </div>
+                        <div className={styles.item}>
+                            <img className={styles.itemImg} src='/images/css/Coffee.jpg'/>
+                            Coffee
+                        </div>
+                        <div className={styles.item}>
+                            <img className={styles.itemImg} src='/images/css/Burger.jpg'/>
+                            Pocket Friendly
+                        </div>
+                        <div className={styles.item}>
+                            <img className={styles.itemImg} src='/images/css/Burger.jpg'/>
+                            Delivery
+                        </div>
+                    </div>
+
+                    <div className={styles.offerBlock}>
+                        <div className={styles.heading}>
+                            Top Offers Today
+                        </div>
+                        <div className={styles.offers}>
+                            <div className={styles.largeOffer}>
+                                <img className={styles.largeOfferImg} src='/images/css/offer-1.jpg'/>
+                                <div className={`${styles.orange} ${styles.large}`}>
+                                        20% off on cheese burgers!!
+                                </div>
+                                <div className={`${styles.ash} ${styles.medium}`}>
+                                        Follow me. Let's get cheesy...
+                                </div>
+                            </div>
+                            <div className={styles.smallOfferleft}>
+
+                                <div className={styles.smallOffer}>
+                                    <img className={styles.smallOfferImg} src='/images/css/offer-2.jpg'/>
+                                    <div>
+                                        <div className={`${styles.orange} ${styles.medium}`}>
+                                                20% off on cheese burgers!!
+                                        </div>
+                                        <div className={`${styles.ash} ${styles.small}`}>
+                                                Follow me. Let's get cheesy...
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.smallOffer}>
+                                    <img className={styles.smallOfferImg} src='/images/css/offer-2.jpg'/>
+                                    <div>
+                                        <div className={`${styles.orange} ${styles.medium}`}>
+                                                20% off on cheese burgers!!
+                                        </div>
+                                        <div className={`${styles.ash} ${styles.small}`}>
+                                                Follow me. Let's get cheesy...
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                            <div className={styles.smallOfferRight}>
+                                <div className={styles.smallOffer}>
+                                    <img className={styles.smallOfferImg} src='/images/css/offer-1.jpg'/>
+                                    <div>
+                                        <div className={`${styles.orange} ${styles.medium}`}>
+                                                20% off on cheese burgers!!
+                                        </div>
+                                        <div className={`${styles.ash} ${styles.small}`}>
+                                                Follow me. Let's get cheesy...
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.smallOffer}>
+                                    <img className={styles.smallOfferImg} src='/images/css/offer-1.jpg'/>
+                                    <div>
+                                        <div className={`${styles.orange} ${styles.medium}`}>
+                                                20% off on cheese burgers!!
+                                        </div>
+                                        <div className={`${styles.ash} ${styles.small}`}>
+                                                Follow me. Let's get cheesy...
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div className={styles.blogBlock}>
+                        <div className={styles.heading}>
+                            Top Blogs Today
+                        </div>
+                        <div className={styles.blogs}>
+                            <div className={styles.blog}>
+                                <img className={styles.blogImg} src='/images/css/blog-1.jpeg'/>
+                                <div className={`${styles.orange} ${styles.Large }`}>
+                                    Craving for Haleem this Ramadan?
+                                </div>
+                                <div className={styles.Author}>
+                                    <img className={styles.authorImg} src='/images/css/Tarik.jpg' />
+                                    <div className={`${styles.ash} ${styles.small } ${styles.authorInfo}`}>
+                                        Tanveer Kabir<br/>
+                                        May 19, 2018<br/>
+                                        
+                                    </div>  
+                                    <div className={`${styles.icon} ${styles.orange}`}>
+                                        follow
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <div className={styles.blog}>
+                                <img className={styles.blogImg} src='/images/css/blog-2.jpg'/>
+                                <div className={`${styles.orange} ${styles.Large }`}>
+                                New Mexican Restaurant in Dhaka
+                                </div>
+                                <div className={styles.Author}>
+                                    <img className={styles.authorImg} src='/images/css/Tarik.jpg' />
+                                    <div className={`${styles.ash} ${styles.small } ${styles.authorInfo}`}>
+                                        Tanveer Iqbal<br/>
+                                        May 19, 2018<br/>
+                                        
+                                    </div>  
+                                    <div className={`${styles.icon} ${styles.orange}`}>
+                                        follow
+                                    </div> 
+                                </div>
+                            </div>
+
+                            
+                            <div className={styles.blog}>
+                                <img className={styles.blogImg} src='/images/css/blog-1.jpeg'/>
+                                <div className={`${styles.orange} ${styles.Large }`}>
+                                    Craving for Haleem this Ramadan?
+                                </div>
+                                <div className={styles.Author}>
+                                    <img className={styles.authorImg} src='/images/css/Tarik.jpg' />
+                                    <div className={`${styles.ash} ${styles.small } ${styles.authorInfo}`}>
+                                        Tanveer Kabir<br/>
+                                        May 19, 2018<br/>
+                                        
+                                    </div>  
+                                    <div className={`${styles.icon} ${styles.orange}`}>
+                                        follow
+                                    </div> 
+                                </div>
+                            </div>
+                            
+
+                        </div>
+                    </div>
+
                 </div>
-                {this.redirectSearch()}
-            </header>
+
+            </div>
+
         );
     }
 }

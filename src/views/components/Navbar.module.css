@@ -8,7 +8,7 @@
 	margin: 0 !important;
 	padding: 0 !important;
 	overflow: visible  !important;	
-	padding: 10px 20px !important;
+	padding: 10px 50px !important;
 	color: #E1DEDE;
 	font-size: 25px;
 }
@@ -108,4 +108,10 @@
 	border-top-left-radius: 0%;
 	border-bottom-left-radius: 0%;
 	font-size: 20px;
+}
+
+
+.logo{
+	width: 130px;
+	height: auto;
 }

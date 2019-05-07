@@ -1,4 +1,7 @@
 /*Navbar Div*/
+.all{
+    background-color: #f2f2f2;
+}
 .row {
     max-width: 1140px;
     margin: 0 auto;
@@ -10,7 +13,7 @@
         url('/images/css/Featured-Image3.jpg');
     background-size: cover;
     background-position: center;
-    height: 100vh;
+    height: 80vh;
 }
 
 .frontText {
@@ -64,7 +67,7 @@
 
 .mainNav {
     float: right;
-    padding: 10px 30px;
+    padding: 10px 40px;
     list-style: none;
     color: #fff;
 }
@@ -200,3 +203,180 @@
     border-bottom: 1px solid rgb(172, 172, 172);  
     cursor: pointer; 
 }
+
+.logo{
+    padding-top: 15px;
+    padding-left: 10px; 
+    width: 180px;
+    height: auto;
+}
+
+
+
+.orange{
+    color: #c15511;
+}
+
+.ash{
+    color: #999999;
+}
+
+.large{
+    font-size: 40px;
+    margin-left: 10px;
+}
+
+.Large{
+    font-size: 25px;
+    margin-left: 10px;
+}
+
+.medium{
+    font-size: 20px;
+    margin-left: 10px;
+}
+.small{
+    font-size: 15px;
+    margin-left: 10px;
+}
+
+.quickSearch{
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0px 10px 0px;
+    
+}
+.item{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+
+
+
+
+.itemImg{     
+    width: 100px;
+    height: auto;
+}
+
+.itemImg:hover{
+    opacity: 0.7;
+
+}
+
+.offerBlock{
+    margin: 80px 40px 80px 40px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.heading{
+    text-align: center;
+    color: #c15511;
+    font-size: 40px;
+    margin-bottom: 40px;
+}
+
+.offers{
+    display: flex;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    
+}
+
+.largeOffer{
+    flex: 4;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: white;
+    
+}
+
+.largeOfferImg{
+    width: 680px;
+    height: auto;
+
+}
+
+.smallOfferleft{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 15px;
+}
+
+.smallOfferRight{
+    display: flex;
+    flex-direction: column;
+    flex: 2;
+    padding: 15px;
+}
+
+.smallOffer{
+    background-color: white;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+}
+
+.smallOfferImg{
+    width: 280px;
+    height: auto;
+}
+
+.blogBlock{
+    display: flex;
+    flex-direction: column;
+}
+
+.blogs{
+    display: flex;
+    justify-content: space-around;
+}
+
+.blog{
+    background-color: white;
+    padding: 15px;
+
+    
+}
+
+.blogImg{
+    width: auto;
+    height: 300px;
+}
+
+.Author{
+    display: flex;
+    margin-top: 5px;
+    padding: 5px 10px 5px 15px;
+    border-bottom: 1px solid #d9d9d9;
+    border-top: 1px solid #d9d9d9;
+    
+}
+
+.authorImg{
+    width: 50px;
+    height: 50px;
+    border: 2px solid #c5c5c5;
+    border-radius: 25px;
+}
+
+.authorInfo{
+    margin: 5px;
+}
+
+.icon{
+    margin: 8px;
+    border: 1px solid #ED7D31;
+    border-radius: 2px;
+    height: 25px;
+    padding: 3px;
+}
+
+
+
+
